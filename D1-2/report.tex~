@@ -1,0 +1,443 @@
+\documentclass[11pt,a4paper]{ctexart}
+\input{macros.tex}
+\graphicspath{{figure/}}
+\usepackage{enumerate}
+%\usepackage{fancyhdr}
+%\cpic{<尺寸>}{<文件名>}}用于生成居中的图片。
+\newcommand{\cpic}[2]{
+\begin{center}
+\includegraphics[scale=#1]{#2}
+\end{center}
+}
+%\cpicn{<尺寸>}{<文件名>}{<注释>}用于生成居中且带有注释的图片，其label为图片名。
+\newcommand{\cpicn}[3]
+{
+\begin{figure}[H]
+\cpic{#1}{#2}
+\caption{\color{red}#3\label{#2}}
+\end{figure}
+}
+
+\crefname{equation}{}{}
+\crefname{figure}{图}{图}
+\crefname{footnote}{注释}{注释}
+\crefname{table}{表}{表}
+\title{实验D1 锁相放大器与弱信号测量(必做)}
+\begin{document}
+\maketitle
+\begin{tabular}{|p{8em}|p{8em}|p{8em}|p{5em}|}
+\hline
+		实验方案 &实验记录  &分析讨论 &总成绩\\
+		\hline
+		        &          &          &  \\
+	    \hline
+	\hline 
+	年级、专业： &17级物理学 &组号：& 6 \\
+	\hline
+	姓名：& 徐昊霆 &学号：&17353071  \\
+	\hline
+	日期：& \today &教师签名： &  \\
+    \hline	
+        \end{tabular}
+
+\begin{enumerate}
+ \item 实验报告由三部分组成：
+ \begin{enumerate}
+  \item[1)]预习报告：（提前一周）认真研读\textbf{\uline{实验讲义}}，弄清实验原理；实验所需的仪器设备、用具及其使用（强烈建议到实验室预习），完成讲义中的预习思考题；了解实验需要测量的物理量，并根据要求提前准备实验记录表格（由学生自己在实验前设计好，可以打印）。预习成绩低于50\%者不能做实验{\color{red} (实验D2和D3需要提前一周的周四完成预习报告交任课老师批改，批改通过后，才允许做实验)}。
+
+  \item[2)]实验记录：认真、客观记录实验条件、实验过程中的现象以及数据。实验记录请用珠笔或者钢笔书写并签名（{\color{red}用铅笔记录的被认为无效}）。{\color{red}保持原始记录，包括写错删除部分，如因误记需要修改记录，必须按规范修改。}（不得输入电脑打印，但可扫描手记后打印扫描件）；离开前请实验教师检查记录并签名。
+  \item[3)]分析讨论：处理实验原始数据（学习仪器使用类型的实验除外），对数据的可靠性和合理性进行分析；按规范呈现数据和结果（图、表），包括数据、图表按顺序编号及其引用；分析物理现象（含回答实验思考题，写出问题思考过程，必要时按规范引用数据）；最后得出结论。
+ \end{enumerate}
+ \textbf{实验报告}就是预习报告、实验记录、和数据处理与分析合起来，加上本页封面。
+ \item 每次完成实验后的一周内交\textbf{实验报告}。
+ \item 除实验记录外，实验报告其他部分建议双面打印。
+\end{enumerate}
+\newpage
+\tableofcontents
+\newpage
+\section{实验原理与方案}
+\subsection{实验目的}
+\begin{enumerate}
+ \item[1.]了解锁相放大器工作原理和特点，掌握锁相放大器基本参数含义及锁相放大器的基本 操作;复习示波器的使用；（实验内容 1）
+  \item[2.]掌握用锁相放大器检测出湮没于噪声中的弱信号方法；（实验内容 2）
+  \item[3.]通过本实验更加直观的了解方波的高频成分，并掌握用锁相放大器检测微弱信号中的谐波；（实验内容 3）
+\item[4.]掌握交流四引线法精密测量小阻抗的原理和方法，理解相位的物理含义及电压与电流之间相位差的测量方法；（实验内容 4，探索）
+\item[5.] 学习 VISA 接口协议，通过 LabVIEW 环境用 PC 机控制锁相放大器数据采集；（实验内容 4）
+\item[6.]了解 PN 结结电容，探究变容二极管内 PN 结电容与反偏电压的关系；（实验内容 5）
+\item[7.] 通过实验了解热噪声的特征，理解热噪声的本质及其统计意义。（实验内容 6，探索）
+\end{enumerate}
+
+
+\subsection{仪器用具}
+\begin{table}[H]
+\cpic{0.4}{t1}
+\caption{弱信号检测实验仪器用具}
+\end{table}
+
+\subsection{实验安全注意事项}
+
+1. OE1022 锁相放大器输入端不能接入强信号;接入信号需限定在 1V 以下。
+
+2. OE4004 稳流源的电流输出不能直接接入 OE1022 锁相放大器的输入端。
+
+\subsection{实验原理}
+\subsubsection{实验三--微弱信号多谐波测量实验}
+方波是一种非正弦形式的信号，理想方波只有高电平和低电平两种状态，且占空比为 50\%。设方波的峰峰值为$E$，角频率为$\omega$，假设方波的表达式为
+\beq
+f(t) = \left\{\begin{aligned}
+&\frac{E}{2},\, -T/2 < x< 0\\
+&-\frac{E}{2},\, 0<x<T/2
+  \end{aligned}
+  \right.
+\eeq
+其中周期$T$与角频率的关系为$T = 2\pi / \omega$。将其分解为频率为$\omega$整数倍正弦函数的叠加
+\beq
+f(t) = \sum_n c_n \sin(n\omega t )
+\eeq
+根据公式
+\beq
+\frac{2}{T} \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt = \delta_{mn}
+\eeq
+因此将方波的表达式两边同时乘$\sin(m\omega t)$并进行积分
+\beq
+\int_{-T/2}^{T/2} f(t) \sin(m\omega t) dt = \sum_n c_n \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt
+\eeq
+其中等式右边为
+\beq
+\sum_n c_n \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt =\frac{T}{2}\sum_n c_n \delta_{mn}
+\eeq
+故有
+\beq
+c_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \sin(n\omega t) dt
+\eeq
+进行计算，得到系数
+\beq
+\begin{aligned}
+  c_n &=& \frac{2}{T}\int_0^{T/2} E \sin(n\omega t)dt \\
+  &=& \frac{2E}{\omega T} \frac{1}{n} \left[1-(-1)^n \right] \\
+\end{aligned}
+\eeq
+故
+\beq
+c_n = \left\{ \begin{aligned}
+  &\frac{2E}{\pi} \frac{1}{n},\, \mathrm{n\,is\, odd}\\
+    & 0,\, \mathrm{n\, is\, even}
+  \end{aligned}
+  \right.
+\eeq
+最终的展开表达式为  
+\beq
+f(t) = \sum_n f_n(t) = \frac{2E}{\pi}\left[ \sin(\omega t) + \frac{1}{3}\sin(3\omega t)+\cdots + \frac{1}{n}\sin(n\omega t)+\cdots\right]
+\eeq
+上式中任意一项均是一个完备的正弦波信号，根据该正弦波信号与方波的频率倍数关系
+不同，可称其为n次谐波：
+\beq
+f_n(t) = \frac{2E}{n\pi} \sin(n\omega t)
+\eeq
+实际测量值为正弦信号的均方根平均值，它与峰峰值的关系为
+\beq
+V_{\rm rms} = \frac{V_p}{\sqrt{2}} = \frac{V_{pp}}{2\sqrt{2}}
+\eeq
+对于目标谐波而言，高次谐波就相当于“噪声”的存在，故谐波测量本质上也是一种从噪声中提取目标信号的过程。
+\cpicn{0.5}{square_wave}{微弱信号多谐波测量实验电路图}
+后面板 TTL OUT 的输出阻抗大小为 250$\Omega$,输出电压为$5.00V$,配合实验电路中的 80dB的电阻衰减模块,衰减为 500$\mu$V 的方波信号,通过 OE1022 可以测出方波基波以及各次谐波信号。理论上各次波的测量值为
+\beq
+V_{\rm nrms} = \frac{2E}{\sqrt{2}n\pi}
+\eeq
+其中，基波的测量值为
+\beq
+V_{\rm rms} = \frac{2\times 500}{\sqrt{2}\times1\times \pi} = 225 \mathrm{\mu V}
+\eeq
+
+\subsubsection{微小阻抗测量实验}
+影响小阻抗测量的因素有:(1)引线电阻,(2)引线与样品的接触电势,(3)因两引线
+与样品接触点的温度不同所产生的温差电势。测量小阻抗不能单纯地提高通过样品的电流,
+因为增大焦尔热更容易导致温差电势。当待测样品电阻值与引线电阻值相当时,常规二引线
+测量电阻就不可避免地包含了导线的电阻;通过四引线法把电流引线与电压测量引线分开,
+直接测量样品的电压降,可扣除引线电阻。接触电势和热电势是直流电压,用直流四引线法
+测量时,是通过反向测量电流测得的电压与正向电流没得的电压差来消除接触电势和热电势
+的;而对于交流法测量,电流方向本身就是正、反向变化的,接触电势与热电势自然被消除。
+\subsubsection{应用锁相放大器的四引线法测量小阻抗}
+有两种方案实现交流四引线法测量微小阻抗(参见~\cite{lec})。这里所谓微小阻抗指微欧、微亨。
+一种用稳流电源,即交流电流振幅不随负载变化;另一种是允许测量电流变化,但几乎
+同时(时间间隔范围内负载不发生变化)测量电流和负载电压降,而电流是通过测量与待负
+载串联的标准电阻上的压降得到。
+
+第一种方案可以用一台锁相放大器实时测量负载的阻抗(及其变化)，稳流源使用OE4004电流源,它通过锁相放大器输出信号控制,频率与控制信号相同,电流在 1.00--100mA 范围内与控制信号的振幅相关,即锁相放大器控制信号为 1.00V 时,稳流源输出电流为 100mA。
+
+按四线线法连接样品(如~\cref{tiny_resis}所示),对于纯电阻,用 OE1022 测量的样品电压降除
+以稳流源电流,即可得到负载阻抗值。对于非纯电阻,需要通过获得样品电压降相对于通过
+样品电流的相位差来确定阻抗的成分和大小。
+\cpicn{0.5}{tiny_resis}{交流四引线法测量微小电阻接线图(我认为此图有所不妥，此图相当于将电源信号直接接入到锁相放大器signal in端，在实验中如果$Z_x$为一个电容，我们发现扫频时无论如何得到的信号不变。因此下面的一些图才是真正测量时所用的图。}
+
+样品:
+\begin{enumerate}
+\item 精密电阻(1.0$\Omega$, 0.1$\Omega$);
+\item  厚膜电阻(1.0$\Omega$, 10$\Omega$, 50$\Omega$),特点:电感、电容极小,适用于电压取样;
+ \item 自备电阻 1:用 500mm 长的$\phi$1.0 的漆包线(或电线)对折为 250mm 长的双线后绕在直径 10mm 的圆管上;因对折线正反方向电流抵消,(在工艺误差范围内)得到的是一个纯线绕电阻;
+ \item 自备电阻 2:用 500mm 长的$\phi$1.0 的漆包线(或电线)直接绕在 10mm 的圆管上,因此,除样品2的电阻外,样品3还有绕成线圈的电感;
+\end{enumerate}
+
+亦可自己并亲手绕制电阻和电感。
+
+稳流电源输出电流
+\beq
+\tilde{I} = I_S e^{i(\omega t +\theta_I)}
+\eeq
+样品两端输出的电压为
+\beq
+\tilde{V} = V_S  e^{i(\omega t +\theta_V)}
+\eeq
+其中,$\theta_V$和$\theta_I$ 分别是样品电压和电流的相位;从上面两式中计算出阻抗值:
+\beq
+\tilde{R} = \frac{ V_S  e^{i(\omega t +\theta_V)}}{I_S e^{i(\omega t +\theta_I)}} = \frac{V_S}{I_S} \left[\cos(\theta_V - \theta_I)+i\sin(\theta_V - \theta_I)\right]
+\eeq
+其中，$\frac{V_S}{I_S}\cos(\theta_V - \theta_I)$为纯电阻值。
+
+建议选用扫频功能测量阻抗随频率的变化,并通过软件记录数据,以降低人工记录强
+度。数据处理时,从记录数据中取多点平均以降低统计误差。但要注意时间常数、扫频时间
+及采样频率之间的关系,才能获得稳定可靠的数据。
+
+保存数据功能即保存阻抗测量或扫频测量得到的结果,只有在完成测量工作后,保存数
+据的按钮才能够被选择。数据会以 Excel 文件格式保存于程序路径。
+
+
+\subsection{实验前思考题}
+\subsubsection{实验三}
+1. 信号发生器如何产生方波?
+
+2. 能检测到方波的 2 次谐波吗?为什么?(请在实验时测量验证)
+
+3. (选)用示波器可以测量方波的谐波吗?(请在实验时测量验证)
+
+\subsubsection{实验四}
+本实验内容之方案一按研究型实验要求。锁相放大器的好处是超强的信号提取能力,
+但作为交流法,其测量结果包含更多的信息,如相位信息。除纯电阻以外,电感、电容都
+会对测量结果产生影响。
+(例如,通过改变导线的弯曲形状来改变其电感。)
+
+1. 交流四引线法是如何消除引线电阻、热电势和接触电势的影响的?
+
+通过四引线法把电流引线与电压测量引线分开,直接测量样品的电压降,可扣除引线电阻;
+利用交流法测量,电流方向本身就是正、反向变化的,接触电势与热电势自然被消除。
+
+2. 本实验介绍的测量方法属于直接测量还是间接测量?
+属于间接测量,测量时得到的结果为电流、电压、相位需要代入式(D1-30)和(D1-31)中计算
+出阻抗,所以属于间接测量。
+
+3. 如何通过实验判断待测电阻是否纯电阻?如果不是,则如何从中分离出纯电阻?
+
+通过实验,测量待测样品的电压相位以及通过样品的电流相位,如果二者相位一致,则可
+以判断电阻为纯电阻,否则不是;
+
+若待测电阻中存在感抗或者容抗,可以通过串联大小合适的电容箱或者电感箱,以消除待
+测电阻的感抗或容抗,提取待测电阻的纯电阻成分。
+
+4. 如何测量稳流源输出电流的相位?【警告:不能将稳流的输出直接接入锁相放大器
+  的输入端。】请推导待测样品的交流阻抗与锁相放大器测量值之间的关系。
+
+将待测样品更换为厚膜电阻,测量其两端电压的相位,由于厚膜电阻电感、电容极小,
+其两端电压相位与通过它的电流相位一致,从而测量得到稳源输出电流的相位。稳流电源输出电流
+\beq
+\tilde{I} = I_S e^{i(\omega t +\theta_I)}
+\eeq
+样品两端输出的电压为
+\beq
+\tilde{V} = V_S  e^{i(\omega t +\theta_V)}
+\eeq
+其中,$\theta_V$和$\theta_I$ 分别是样品电压和电流的相位;从上面两式中计算出阻抗值:
+\beq
+\tilde{R} = \frac{ V_S  e^{i(\omega t +\theta_V)}}{I_S e^{i(\omega t +\theta_I)}} = \frac{V_S}{I_S} \left[\cos(\theta_V - \theta_I)+i\sin(\theta_V - \theta_I)\right]
+\eeq
+其中，$\frac{V_S}{I_S}\cos(\theta_V - \theta_I)$为纯电阻值。
+
+5. (选)OE1022锁相放大器(包括其测量软件)带有扫频功能,是否可以利用该功能对不同的内部参考频率实现自动测量?
+
+可以利用该功能对不同的内部参考频率实现自动测量;在锁相放大器前面板的菜单栏选
+择[REF/PHASE]子菜单进入,<Ref.source>选择<Internal Sweep>内部参考信号扫频。
+
+
+
+
+
+
+\newpage
+\section{实验步骤与记录}
+\begin{tabular}{|p{8em}|p{8em}|p{8em}|p{8em}|}
+	\hline 
+	专业：     &Physics       &年级：      & 17     \\
+	\hline
+	姓名：& 徐昊霆 &学号：&17353071  \\
+	\hline
+	室温：&                    &实验地点 & 教学楼 \\
+	\hline	
+	学生签名： & & 评分： & \\
+	\hline
+	日期： & \today & 教师签名：&  \\
+	\hline
+\end{tabular}
+
+\subsection{实验三--微弱信号多谐波测量实验}
+实验步骤：
+
+1)用BNC-BNC信号线连接OE1022后面板的“TTL OUT”接口与教学实验箱本实验框图中的“TTL IN”接口,方波峰峰值为 5.00V,经过80dB(10000 倍)的衰减,输出$E$峰峰值为500$\mathrm{\mu V}$的方波信号;
+
+(2)用 BNC-BNC 信号线连接教学实验箱本实验框图中的“TTL OUT”接口与OE1022的“A/I”接口;
+
+(3)按下前面板 REF PHASE 按键进入子菜单。REF PHASE子菜单界面如图~\ref{refphase}所示。其中 Harmonic 二级子菜单中设置测量的谐波次数,使用键盘输入可选择所需阶次。
+同时测量输入方波的 3 次谐波和 5 次谐波的操作方法:在 REF PHASE 子菜单中,按下软键 4 选择谐波功能,进入 Harmonic 二级子菜单。如图 D1-31 所示。
+\cpicn{0.5}{refphase}{REF PHASE子菜单}
+
+按下软键 1,在数字键盘上输入数字“3”,并按下“ENTER”键以确认;再按下软键 2,在
+数字键盘上输入数字“5”,此时测量出来的值即为输入信号的 3 次和 5 次谐波。选择 DISPLAY
+子菜单,在 Display\&scale 选项中选择 Full,Type 选择 List,即可查看测得的谐波(谐波 1 对应 Xh1、Yh1、Rh1 和 θh1,谐波 2 对应 Xh2、Yh2、Rh2 和 θh2,)
+。测量结果如图 D1-32 所示。
+
+(4)记录测得实验结果,多次改变 OE1022 中谐波奇次值,重复上述实验;
+
+(5)利用公式计算方波各高次谐波值,并与实验测量结果对比。
+
+给方波加入噪声后,锁相放大器还能检测到方波的多次谐波吗?请制定测量方案并验证
+它。(信噪比调节到约-26dB 或-46dB。)
+\begin{table}[H]
+  \caption{微弱信号多谐波测量实验记录}
+  \cpic{0.4}{square_table}
+\end{table}
+
+
+\subsection{实验四--微小阻抗测量实验}
+
+
+(1)按~\cref{tiny_resis}连接好测量电路;
+
+a) 用 BNC-夹具信号线将待测元件电压线连接到 OE1022 的信号输入 signal in;
+
+b) 用 BNC-BNC 信号线连接 OE1022 的“SINE OUT”接口与 OE4004 的“Vin ”接口;
+
+c) 用 BNC 夹具信号线连接 OE4004 的“Vout ”接口与样品的电流线;
+
+(2)使用 USB 线连接 OE1022(USB 接口在后面板)与 PC 机,并在 PC 机上打开阻抗
+测量的 LabVIEW 程序 OE1022\_Console\_CN。
+
+(3)在界面或 OE1022 的 REF PHASE 菜单下,Ref. source 选择 Internal,Ref.
+
+(4)按下前面板 GAIN TC 按键进入子菜单,在 Sensitivity 中选择 1V
+Reserve 选择 Normal, Time Constant 选择 100ms, Filter DR
+dB/oct 选择24。
+
+(5) 在程序OE1022\_Console\_CN设置扫频类型对数扫频类型,扫频步进为
+100\%,开始频率 250Hz,扫频截止频率128.000kHz,步进时间1000ms,
+Sine output 设置为0.600Vrms,采样率1000;
+
+(6) 开始测量,记录稳源电流值$I_S$, 扫频完成后获得EXCEL文件,将文件中
+的电压、相位记录样品电压、样品电压相位中;
+
+(7) 将待测元件更换为10$\Omega$的厚膜电阻,按原电路连接;
+
+(8) 开始扫频,完成后获得EXCEL文件,将文件中的相位记录到电流相位中;
+
+(9) 分析数据。
+
+{\color{red} 注意：面包板会引入接触电阻，四引线法如何接电压线?
+
+用BNC-夹具信号线连接电压线与OE1022 信号输入端。}
+
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+测量电流$I_S/\mathrm{mA}$ &      & 样品标称电阻$R_0/\Omega$ &        &      \\ \hline
+频率   & 电流相位 & 样品电压& 样品电压相位 & 测量电阻 \\
+$f/\mathrm{Hz}$&$\theta_I/\mathrm{deg}$&$V_S/V$&$\theta_V$/deg &$R_m/\Omega$ \\\hline
+250 &      &        &        &      \\\hline
+500 &      &        &        &      \\\hline
+1000 &      &        &        &      \\\hline
+2000 &      &        &        &      \\\hline
+8000&      &        &        &      \\\hline
+16000 &      &        &        &      \\\hline
+32000 &      &        &        &      \\\hline
+64000 &      &        &        &      \\\hline
+128000&      &        &        &      \\\hline
+&      &        &        &      \\\hline
+\end{tabular}
+
+单通道锁相放大器外部参考信号法测小阻抗——设计并验证 2
+
+\cpicn{0.5}{hint_2}{单通道锁相放大器外部参考信号测量小阻抗的原理图。}
+(1) 按图D1-33 连接好测量电路;
+
+a) 用BNC-BNC信号线连接信号发生器CH1与OE004 “V in ”接口;
+
+b) 用BNC-夹具信号线连接OE4004 的“V out ”接口与厚膜电阻R s ,待测元件Z x
+的一侧电流线;
+
+c) 用面包板将R S ,Z x 串联;
+
+d) 用 BNC-夹具信号线将待测元件电压线连接到 OE1022 的信号输入 signal
+in;
+
+e) 用 BNC-夹具信号线将厚膜电阻电压线连接到 OE1022 的参考信号输入Ref
+in;
+
+(2) 使用USB 线连接 OE1022(USB 接口在后面板)与PC 机,并在PC 机上打
+开阻抗测量的 LabVIEW 程序OE1022\_Console\_CN。
+
+(3) 在界面或OE1022 的 REF PHASE 菜单下,Ref. source 选择 External,
+Ref;
+
+(4) 按下前面板 GAIN TC 按键进入子菜单,在 Sensitivity 中选择 1V
+Reserve 选择 Normal, Time Constant 选择 100ms, Filter DR dB/oct选择24。
+
+(5) 在信号发生器设置扫频类型对数扫频类型,每秒两倍频程,开始频率
+250Hz,扫频截止频率128.000kHz,步进时间1000ms, Sine output 设置为
+0.600Vrms,采样率1000;
+
+(6) 开始测量,记录稳源电流值$I_s$ ,扫频完成后获得EXCEL文件,将文件中的电
+压、相位记录样品电压、样品电压相位中;
+
+(7) 将待测元件更换为10Ω 的厚膜电阻,重复(4)扫频;
+
+(8) 开始扫频,完成后获得EXCEL文件,将文件中的相位记录到电流相位中;
+分析数据,验证方案一测量结果。
+
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+测量电流$I_S/\mathrm{mA}$ &      & 样品标称电阻$R_0/\Omega$ &        &      \\ \hline
+频率   & 电流相位 & 样品电压& 样品电压相位 & 测量电阻 \\
+$f/\mathrm{Hz}$&$\theta_I/\mathrm{deg}$&$V_S/V$&$\theta_V$/deg &$R_m/\Omega$ \\\hline
+250 &      &        &        &      \\\hline
+500 &      &        &        &      \\\hline
+1000 &      &        &        &      \\\hline
+2000 &      &        &        &      \\\hline
+8000&      &        &        &      \\\hline
+16000 &      &        &        &      \\\hline
+32000 &      &        &        &      \\\hline
+64000 &      &        &        &      \\\hline
+128000&      &        &        &      \\\hline
+&      &        &        &      \\\hline
+\end{tabular}
+
+
+\newpage
+\section{分析与讨论}
+\begin{tabular}{|p{7em}|p{7em}|p{7em}|p{7em}|}
+	\hline 
+	专业：     &Physics       &年级：      & 17     \\
+	\hline
+	姓名：& 徐昊霆 &学号：&17353071  \\
+	\hline
+	日期&  \today              & &  \\
+	\hline	
+	评分 & & 教师签名 & \\
+	\hline
+\end{tabular}
+
+
+\subsection{实验数据分析}
+
+\subsection{实验报告思考题}
+
+1. 分析引线对小阻抗精密测量的影响;
+
+2. 分析所测量相位(差)值的物理含义。
+\bibliographystyle{siam}
+\bibliography{cites}
+\end{document}

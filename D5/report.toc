@@ -1,0 +1,28 @@
+\contentsline {section}{\numberline {1}实验原理与方案}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}实验目的}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}实验安全注意事项}{3}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}仪器用具}{4}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}实验背景}{5}{subsection.1.4}
+\contentsline {subsubsection}{\numberline {1.4.1}CCD简介}{5}{subsubsection.1.4.1}
+\contentsline {subsubsection}{\numberline {1.4.2}CCD结构与原理}{5}{subsubsection.1.4.2}
+\contentsline {subsubsection}{\numberline {1.4.3}CCD的应用}{6}{subsubsection.1.4.3}
+\contentsline {subsection}{\numberline {1.5}实验原理}{6}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.6}实验前思考题}{11}{subsection.1.6}
+\contentsline {section}{\numberline {2}实验步骤与记录}{12}{section.2}
+\contentsline {subsection}{\numberline {2.1}实验内容}{12}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}线阵 CCD 驱动及其特性测量}{12}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}利用线阵CCD测量工件直径和角位置}{13}{subsubsection.2.1.2}
+\contentsline {subsubsection}{\numberline {2.1.3}面阵CCD驱动及特性测量（选做）}{14}{subsubsection.2.1.3}
+\contentsline {subsubsection}{\numberline {2.1.4}面阵 CCD 图像采集、运算和颜色处理}{15}{subsubsection.2.1.4}
+\contentsline {subsubsection}{\numberline {2.1.5}利用面阵 CCD 测量工件二维尺寸}{17}{subsubsection.2.1.5}
+\contentsline {subsection}{\numberline {2.2}实验原始数据}{18}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}实验结束后的教师签名}{21}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}实验中遇到的问题记录}{23}{subsection.2.4}
+\contentsline {section}{\numberline {3}分析与讨论}{25}{section.3}
+\contentsline {subsection}{\numberline {3.1}线阵CCD驱动及其特性测量}{25}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}工件直径和角位移测量实验}{25}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}工件直径的测量}{25}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}角位置测量实验}{27}{subsubsection.3.2.2}
+\contentsline {subsection}{\numberline {3.3}面阵CCD图像采集、运算和颜色处理}{28}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}利用面阵CCD测量工件二维尺寸}{39}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}实验报告思考题}{42}{subsection.3.5}

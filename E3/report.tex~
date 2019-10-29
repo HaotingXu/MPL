@@ -1,0 +1,691 @@
+\documentclass[utf8]{article}
+\usepackage{xeCJK}
+\setCJKmainfont{AR PL UKai CN}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{graphicx, subfig}
+%\geometry{a4paper,left=2cm,right=2cm}
+\newcommand{\Emph}{\textbf}
+\newcommand{\vectors}{\textbf}
+\newcommand{\bm}{\textbf}
+\usepackage{appendix}
+\usepackage{amsmath}
+\usepackage{amssymb,color}
+\usepackage[colorlinks,linkcolor=blue,anchorcolor=blue,citecolor=green]{hyperref}
+\title{实验CC1+A 热辐射设计性实验}
+\begin{document}
+\maketitle  
+	\begin{tabular}{|p{8em}|p{8em}|p{8em}|p{10em}|}
+		\hline
+		\large{实验方案} &\large{实验记录}  &\large{分析讨论} &\large{总成绩}\\
+		\hline
+		        &          &          &  \\
+	    \hline
+	\hline 
+	年级、专业： &17级物理学 &组号：& 7+A \\
+	\hline
+	姓名：& 徐昊霆、谢梓冰 &学号：&17353071、17353070  \\
+	\hline
+	日期：& 2019.6.2 &教师签名： &  \\
+    \hline	
+        \end{tabular}
+\par
+更新记录：
+\par 2019.4.30 完成实验原理与方案初稿设计
+\par 2019.5.14 实验原理修正
+\par 2019.6.2  完成分析与讨论
+\par 贡献度说明：
+
+\begin{tabular}{|p{12em}|p{12em}|p{12em}|}
+     \hline 
+     \hline 
+     内容 &贡献者 &备注\\
+     \hline 
+     实验原理与方案 & 徐昊霆、谢梓冰&共同讨论完成 \\
+     实验步骤与记录 & 徐昊霆、谢梓冰 &共同讨论完成 \\
+     分析与讨论 & 徐昊霆、谢梓冰 &共同讨论完成 \\
+     \hline 
+     实验内容 &实验者& 备注 \\
+     \hline 
+     传感器辐射强度校正 &徐昊霆、谢梓冰&共同讨论完成 \\
+     两透镜对比 &徐昊霆、谢梓冰&共同讨论完成 \\
+     防辐射能力 &徐昊霆、谢梓冰&共同讨论完成 \\	
+     \hline 
+\end{tabular}
+\newpage
+\tableofcontents
+\section{实验原理与方案}
+
+\subsection{实验目的}
+\par 
+1.传感器辐射强度(辐射通量、或能流密度)校正，\textbf{获得热辐射传感器输出信号与当地热辐射强度的定量关系式。}
+\par
+2.比较带透镜的热辐射传感器(SMTIR9902sil)与不带透镜的传感器(SMTIR9902)之间的结果，\textbf{获得带透镜的热辐射传感器输出信号与辐射表面温度的定量关系}，分析原因并给出其适用范围和使用规范。
+\par 
+3.校正辐射体表面温度(具体校正什么下面会说明)。
+\par
+4.选做：测量不同物体的防辐射能力。
+\subsection{仪器用具}
+		\begin{tabular}{c|c|c|c}
+			\hline
+			编号 & 仪器名称 &数量& 主要参数（型号，测量范围，精度） \\
+			\hline 
+			1 &  黑体辐射与红外测量装置 &1 &DHRH-B;含标尺(60cm)，位移导轨\\
+			& & & 辐射器(三种辐射面)、热辐射传感器（SMTIR9902）\\
+			2 & 数字多用表&2 & RIGOL DM3058E \\
+			3 & 程序控制电源 & 1 &RIGOL DP832 \\
+			4 & 计算机& 1 & 以安装LabView和控温软件，电脑进入win7-64位系统 \\
+			5&透明塑料包装膜 &1& 带透镜传感器的外包装 \\
+			6&螺旋测微仪&1& 精度为0.001\\
+			7&游标卡尺&1& 50分度，内部含有润滑油充分润滑\\
+			8&米黄色纸张&1& B5，购买于淘宝\\
+			9&剪刀&1& 国产，放置于讲台的笔筒中\\
+			\hline
+
+\end{tabular}
+\subsection{黑体辐射基本原理概述}
+
+物体向外辐射连续的电磁波的现象称为热辐射。物体在向外热辐射的同时，还会吸收来组外界电磁能量辐射，且物体辐射或吸收的能量与它的温度、表面积、黑度等因素有关。
+
+1859年基尔霍夫从理论上导出了辐射本领、吸收本领和黑体概念，他用热力学第二定律证明了一切物体的辐射本领$r(\nu,T)$和吸收本领$\alpha(\nu,T)$成正比，比值仅仅与频率和温度有关，可以表达为
+\begin{equation}
+\frac{r(\nu,T)}{\alpha(\nu,T)}=F(\nu,T) \label{coff}
+\end{equation}
+其中$F$是一个与物质无关的普适函数。在1861年他进一步指出，在一定温度下用不透光的壁包围起来的空腔中的热辐射等同于黑体的热辐射。1879年，斯特藩（J.Stefan）从实验中总结出了黑体辐射的辐射本领$R$与物体绝对温度$T$的四次方成正比的结论；1884年，玻耳兹曼对上述结论给出了严格的理论证明，其数学表达式
+为：
+\begin{equation}
+R_T=\sigma T^4 \label{eq:boltzman}
+\end{equation}
+其中$\sigma= 5.673\times10^{-12}\rm W/cm^2K^4为玻$为玻尔兹曼常数。
+
+1888年，韦伯提出了波长与绝对温度的乘积是一定的。1893年维恩从理论上给出了维恩位移定律：
+\begin{equation}
+\lambda_{max} T = b  \label{weien}
+\end{equation}
+式中$b＝2.8978×10^{-3}( m·K )$为一普适常数，随温度的升高，绝对黑体光谱亮度的最大值的波长向短波方向移动，即维恩位移定律。
+
+1900年德国物理学家普朗克（M.Planck），在总结前人工作的基础上，采用内插法将适用于短波的维恩公式和适用于长波的瑞利·金斯公式衔接起来，得到了在所有波段都与实验数据符合的很好的黑体辐射公式：
+\begin{equation}
+r(\lambda,T)=\frac{\xi_1}{\lambda ^5}\frac{1}{e^{\xi_2/\lambda T}-1}
+\end{equation}
+上式中$c_1$和$c_2$均为常数，但是该公式的理论依据当时尚不清楚。
+这一研究的结果促使普朗克进一步去探索该公式所蕴含的更深刻的物理本质。
+他发现如果作如下“量子”假设：对一定频率$\nu$的电磁辐射，物体只能以$h\nu$为单位
+吸收或发射它,也就是说，吸收或发射电磁辐射只能以“量子”的方式进行，每个“量
+子”的能量为：$E=h\nu$，称之为能量子。式中h是一个用实验来确定的比例系数，
+被称之为普朗克常数，它的数值是$6.62559\times10^{-34}$焦耳秒。公式中的$\xi_1$和$\xi_2$可以表示为：$\xi_1=2\pi h c^2, \ \ \xi_2=ch/k$，它们均与普朗克常数相关，分别被称为第一辐射常数
+和第二辐射常数。
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{black_body.jpg}
+	\label{black}
+	\caption{\color{red} 黑体辐射强度随着频率在不同温度下的图样，是对黑体辐射理论的总结。图中每条线代表不同的温度，每个曲线的积分应与对应热力学温度的四次方成正比，即$\sigma T^4$(斯特凡定律)，而每条曲线的极大值点(波长)与热力学温度之间应该满足维恩位移定律，即$\lambda_{\rm max} T=b$。}
+\end{figure}
+
+\subsection{传感器辐射强度校正--方案与原理}
+\par 本节我们阐述如何获得传感器辐射强度与输出电压的定量关系式，进而我们再测量只有环境时的电压值，就可以知道环境的辐射强度。
+\par 我们首先获得单位时间、单位面积流进来的能量，即如果考虑一定的体积$V$，体积内的能量密度为$\rho$，能流密度为$\vec{j}$，那么他们的关系为:
+\begin{equation}
+\frac{\partial}{\partial t}\iiint_V \rho d\tau =-\iint_S \vec{j} \cdot d\vec{S}-\iiint_V QdV,
+\end{equation}
+其中$d\tau$为体积元，$d\vec{S}$为面积矢量。由著名的高斯定理，我们有
+\begin{equation}
+\frac{\partial \rho}{\partial t}+\nabla \cdot \vec{j} + Q =0. \label{eq:energy_conservation}
+\end{equation}
+式~\ref{eq:energy_conservation}说明了能流密度(辐射强度)的物理意义，其中$Q$为热辐射的能量。在室温范围内，能流密度由\textbf{傅里叶传导定律}决定，即
+\begin{equation}
+\vec{j} = -\lambda\nabla T, \label{eq:j}
+\end{equation}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{equipment.jpg}
+	\caption{\color{red}实验装置的示意图}
+	\label{equip}
+\end{figure}
+值得注意的是，在实验中虽然一定体积内的能量密度会由于上述两项而改变，但是我们实验室的传感器只接收电磁波，而热传导则对这个传感器毫无作用，因此实验中传感器的电压只与辐射强度有关，而与附近的温度梯度无关(但这只是理论上的结果，由于我们对于传感器的真正构造一无所知，不能断言热传导是否对他有显著影响，也不能断言，热传导对传感器有什么影响)。在实验中，我们的\textbf{实验装置示意图}如图\ref{equip}所示。我们知道，实验中使用的传感器是带透镜的传感器，如果在它的视角内完全是辐射面，那么它所接收到的辐射就完全来自辐射面，此时环境的因素可以忽略不计。我们得到的辐射强度为
+\begin{equation}
+Q=\frac{q_a}{4} \sin^2 \alpha= \frac{\mathbb{A}\sigma T^4}{4} \sin^2 \alpha \label{radiation}
+\end{equation}
+$\mathbb{A}$为一个任意的系数，如果辐射面是真正的黑体，那么这个系数$\mathbb{A}=1$, $\alpha$是传感器的视角，根据说明书，对于带透镜的传感器，传感器的视角$\alpha \equiv 7.27^{\circ}$，故我们得到如果要使得传感器的视线范围内全部都是辐射体，那么传感器与辐射体的距离应该为(对于带透镜的传感器)
+\begin{equation}
+x\le \frac{R}{\tan(7.27^{\circ})}. \label{eq:cr_distance}
+\end{equation}
+在这个范围内，传感器接收到的辐射强度由式\ref{radiation}决定，如果传感器与辐射面的距离超过这个临界的距离，那么在传感器的视角内，就可以看到完整的辐射面和环境(日光灯、等等)，在理论上超过临界距离以后辐射强度应该是一个常数。于是我们如果要得到辐射强度与输出电压的定量关系式，我们最好在\ref{eq:cr_distance}所决定的范围以内通过最小二乘法定出该比例系数。
+\par 
+但是实际测量中，超过临界距离之后的辐射强度往往随着辐射面温度的升高而缓慢上升，这是由于环境带来的辐射也会随着辐射面温度的上升而上升。为了扣除环境的影响，我们采用\textbf{物理屏蔽}的方法，即直接将整个装置使用\textbf{隔热层}与外界隔离，我们将会对比有隔热层和无隔热层的辐射强度与距离的关系，进而检验屏蔽效果。对于物理屏蔽，我们的方案为加一个特殊制作的罩子，并在罩子内表面贴上反射膜(防止散热)。
+\begin{figure}
+	\centering
+	\includegraphics[width=0.5\textwidth]{theoretical.jpg}
+	\label{theory}
+	\caption{\color{red}输出信号和距离倒数平方的关系，其中蓝色的线为厂家实测的曲线，红色的是理论曲线，理论曲线两段的分界点所对应的就是我们讨论的临界距离$x_{\rm critical}$。后一段理论曲线应该是直线，这是因为在实际距离小于临界距离的情况下，传感器只看到黑面，由于黑面的辐射可近似认为是均匀的辐射，故接收到的辐射强度应为常数，但是由于实际环境的影响，实际的曲线会随着距离的增大而有所降低。}
+\end{figure}
+
+
+\subsection{带透镜与不带透镜的传感器之对比--方案与步骤}
+\par
+这部分相对简单，即分别使用带透镜的传感器和不带透镜的传感器对CC1的"辐射强度随辐射体表面温度、与辐射表面之间距离的变化"两部分实验，之后将他们的结果进行比较。
+\par 我们预测，只有带透镜的传感器在临界距离之内才会得到与辐射面温度四次方成正比、近似与距离平方成反比(实际上是由公式~\ref{radiation}决定)的结果，而不带透镜的传感器由于环境影响较大，结果只会与辐射面温度成正相关，而没有什么明显的关系。
+
+\subsection{不同物体防辐射能力之方案}
+\par 
+选择某个固定距离和固定温度，测得辐射强度，再在辐射体和辐射传感器之间放置透明塑料板，等待足够长时间使得系统达到热平衡，测得辐射强度，取走透明塑料板并使用螺旋测微仪测量其厚度，选择相同厚度的纸张，放置在辐射体和辐射传感器之间等待足够长时间使得系统达到热平衡，测得辐射强度,比较分析三者之间的辐射强度。
+。
+\subsection{防辐射能力的理论模型}
+我们也可以半定量地建立物体防辐射能力的理论模型。众所周知，物质是由原子构成的，原子是由原子核和电子组成的。在我们的世界中原子核带正电而电子带负电。在固体中原子被束缚在一定趋于内作振动。当辐射(电磁场)入射一种介质的时候，原子核就会在外场的作用下开始做\textbf{受迫振动}(忽略电子的影响)。受迫振动的运动方程为
+\begin{equation}
+m \ddot{x} + b \dot{x}+ kx = F_0 e^{i\omega t}
+\end{equation}
+通过定义
+\begin{equation}
+\omega_0 ^2 =\frac{k}{m};\gamma = \frac{b}{m} ,
+\end{equation}
+方程改写为
+\begin{equation}
+\ddot{x} + \gamma \dot{x} +\omega_0^2 x = \frac{F_0}{m} \exp(i \omega t).
+\end{equation}
+稳恒解为$x = A \exp (i\omega t).$其中$A$为振幅(可以为复数)，$i$为虚数单位。带入受迫振动方程为：
+\begin{equation}
+A = \frac{F_0}{m (\omega_0^2 - \omega^2 +i\gamma \omega)}
+\end{equation}
+$A$的模长$|A|$即为振幅，而$A$得幅角代表落后的相位。我们可以求得
+\begin{equation}
+|A| = \frac{F_0}{m} \frac{\sqrt{(\omega_0 - \omega ^2)^2 +\gamma ^2 \omega^2}}{(\omega_0^2-\omega^2)^2-\gamma ^2 \omega^2}.
+\end{equation}
+如果暂且把阻尼项$\gamma$忽略不计，那么可见当$\omega = \omega_0$时，振幅达到无穷大，如果有阻尼，那么振幅不能达到无穷大，且在$\omega = \omega_0$附近取到共振频率。如果入射的电磁波恰好在共振频率附近，那么这种介质的原子就会受激发，在吸收了原有辐射之后会继续向外辐射，宏观表现为辐射继续传播，那么这种物体的防辐射能力就很差。这也是微波炉的原理，如果入射的电磁波(微波)恰好在食物原子的共振频率附近，那么食物原子的振幅就会很大，达到共振从而使食物加热。
+
+\par 如果入射的电磁波的频率与物质原子的共振频率相差很远，那么原子振幅就会很小，甚至不怎么振动。这时这种物体的防辐射能力就很好。
+
+\par 由维恩位移定律公式\ref{weien}，
+我们可以得到我们实验的热辐射电磁波的波长的数量级大致为$10^{4}\rm{nm}$,经过查阅微波炉的波长大致在$122\rm{nm}$左右，所以我们预计两种材料的防辐射能力应该挺好的。
+\newpage
+\section{实验步骤与记录}
+\begin{tabular}{|p{9em}|p{9em}|p{9em}|p{9em}|}
+	\hline 
+	专业：     &Physics       &年级：      & 17     \\
+	\hline
+	姓名：& 徐昊霆 &学号：&17353071  \\
+	\hline
+	室温：&                    &实验地点 & 教学楼A512 \\
+	\hline	
+	学生签名： & & 评分： & \\
+	\hline
+	日期： & 2019.5 & 教师签名：&  \\
+	\hline
+\end{tabular}
+\subsection{实验系统的搭建}
+\par 1、辐射体的安装。辐射体固定于辐射架的最上端，轻旋旁边的固定螺丝，即可从上方取下辐射体（固定螺丝不要拧太紧，防止损坏外壳）。 
+\par 2、控制系统与数据采集系统的连接。 
+本实验一共用到2个台式万用表，一个可编程直流电源。其中一台万用表测量辐射体的热敏电阻PT1000（用于温度采集），另一台万用表测量辐射传感器上的电压。接线方式如表所示。
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{table1.jpg}
+	\label{table1}
+	\caption{\color{red} 辐射器与辐射传感器的接线}
+\end{figure}
+\par 3、基于LabView的实验管理编程
+PC机上已保存预编好的基于LabView的实验管理程序，放于桌面，文件名为“CC1热辐射实验控温程序”。在运行控温程序前，先进行如下检查 
+\par （1）	检查所有连线已经正确连接（辐射器的PT1000，辐射器的两组陶瓷加热器
+辐射传感器的输出）。 
+\par （2）	检查所有仪器与电脑通过USB口通信正常。在桌面找到“NI MAX”快捷方式图标并双击启动Measurement \& Auotmation Explorer （MAX），在左侧的“我的系统”→设备和接口，鼠标左键点开后，可以看到所有连接电脑的仪器设备，其中有三个USB设备，2个为DM3000 SERIES，1个为DP800 Serials，这就是连接电脑的三台设备。每台设备都有自己的唯一地址，利用后四位数字区分每台仪器的USB地址，并和实验台上放置的仪器对应起来。
+\par （3）	检查Labview对仪器的识别。在MAX界面，找到General，选择Launch Labview IDFinder后点Go，进入NI仪器驱动程序查找器，点开“已连接的仪器”，在这个目录下，如果看到DP832和两个DM3058E，就说明3台仪器识别正常。
+\par （4）	这时就可以双击放于桌面，文件名为“CC1 热辐射实验控温程序”。
+ \begin{figure}
+ 	\centering
+ 	\includegraphics[width=0.9\textwidth]{table2.jpg}
+ 	\label{table2}
+ 	\caption{\color{red} Labview面板}
+ \end{figure}
+\par （1）、辐射器温度探测部分：面板左上部，“辐射器PT1000台式万用表”下拉框请选择连接辐射器PT1000的那台万用表，注意仪器USB地址里的数字要和仪器背后的序列号一致。“Function”选择2-Wire测量电阻，程序会根据测得的PT电阻换算出温度值。“辐射器温度设定”请根据具体实验设置控温目标温度，“辐射器Auto Range”指的是万用表测量时量程是否为自动，按钮在上部为选择“自动量程”。“Head PT1000”
+和“辐射器实测温度”分别为测得的电阻和对应的实际温度值。 
+\par （2）、辐射传感器部分：面板左中部，“辐射传感器SMTIR9902”下拉框请选择连接辐射传感器的那台万用表，注意仪器USB地址里的数字要和仪器背后的序列号一致。“Function”选择DC Volts测量直流电压，“辐射传感器（V）”为实测的传感器电压。“辐射传感器Auto Range”指的是万用表测量时量程是否为自动，按钮在上部为选择“自动量程”。“文件名”显示的保存参数的文件名和路径，程序设计的可以同时保存“辐射器温度”、“可编程直流电源输出功率”、“辐射传感器输出电压”这三个参数。
+\par （3）、可编程直流电源部分：面板左下部，通过对DP832电源进行控制，进而控制辐射体的加热功率。“DP832 Resource name”请通过下拉框选择实验台上放置的直流电源，本实验采用同系列的DP832（请核对一下仪器背后的序列号是否一致）。“DP832 channel”请选择30V/3A（通道2）。“Enable OVP”是极限参数保护开启按钮，按钮在上面是开启，旁边的“Voltage Limit”、“Current Limit”分别为最大限制电压、最大限制电流，采 用默认值即可（24V，2A）。最下面会显示实际输出的电压、电流、功率。
+\par 面板右上方有：温度超过122度报警灯（辐射器温度不能设定超过120度，否则会过热损坏辐射器。程序运转正常时，若温度超过122度会切断直流电源供电）。 “STOP OUTPUT”按钮，其功能为停止控温面板的右下方设置了四个波形图表，用于显示辐射器温度、辐射传感器电压、直流电源的输出电压和电流。
+
+\subsection{对距离的校正}
+\par 在进行实验之前,由于实际刻度与距离的不同，首先要对距离进行校正。我们首先测得辐射面处距离$l_1$，之后测量传感器架子的厚度$l_2$，故真实的距离$x$为
+\begin{equation}
+ x = x_{\rm measure} -l_1 + \frac{l_2}{2}.
+\end{equation}
+\par 
+首先我们测量$l_1$和$l_2$，测量五次并取平均值:
+
+\begin{tabular}{|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline
+     $l_1$/mm &  &  & & &  \\
+     \hline 
+     $l_2$/mm &&&&& \\
+	\hline 
+\end{tabular}
+\subsection{传感器辐射强度校正}
+首先测量辐射面直径，测量五次取平均值：
+
+\begin{tabular}{|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline
+	直径/mm &  &  & & &  \\
+	\hline 
+\end{tabular}
+\par 通过此次测量我们计算得到临界距离 $x_{c}= \frac{R}{\tan(7.27^{\circ})}=$
+\par 之后我们固定辐射体表面温度，在临界距离以内移动传感器，并记录下输出电压的读数，具体实验步骤如下:
+\par 
+1、	将温度控制目标设置在某一温度，等待一段时间待其稳定
+\par 2、	设计若干个距离控制点；
+\par 3、移动红外传感器的位置，每移动一定的距离后，记录红外传感器的位置和测得的辐射强度，并记录在表中，绘制辐射强度-距离图以及辐射强度-距离的平方图。
+\par 控制温度为$T = $
+\par 
+\begin{tabular}{|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline
+	距离/mm &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+	距离/mm &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+	距离/mm &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+		距离/mm &&&&&& \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+\end{tabular}
+
+\par 加入物理屏蔽之后，重复实验。实验时应当注意每次打开纸筒调整距离之后，应当等待足够长时间使得系统达到热平衡状态。
+\par 控制温度$T = $
+
+\begin{tabular}{|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline
+	距离/mm &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+	距离/mm &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+	距离/mm &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+		距离/mm &&&&&& \\
+    \hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline  
+\end{tabular}
+\par 之后我们固定距离，改变温度，测量输出信号,具体实验步骤如下：
+\par 1、	选择某个在临界距离以内的位置
+\par 2、	设计若干个温度控制点
+\par 3、由于120摄氏度的断电保护控制，设计的控温温度设置值不高于118摄氏度。记录每个控温点（稳定后）的温度和辐射强度并填在表中； 
+\par 4、分析数据，探索辐射强度与辐射表面温度之间的关系，并绘制温度-辐射强度
+曲线图； 
+
+\par 传感器与辐射面的距离： \ \ \ \ \ \ \ \ \ mm
+
+\begin{tabular}{|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline
+    温度(摄氏度) &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+	温度(摄氏度) &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+\end{tabular}
+
+加入物理屏蔽之后，重复上述实验。
+
+\begin{tabular}{|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline
+	温度(摄氏度) &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+	温度(摄氏度) &  &  & & &  & \\
+	\hline 
+	电压($10^{-6} V$) &&&&&& \\
+	\hline 
+\end{tabular}
+
+\subsection{带透镜与不带透镜的传感器对比}
+\par 在这里我们分别用带透镜的传感器和不带透镜的传感器分别改变距离记录电压，并对比两个电压的曲线。具体实验步骤如下：
+\par 
+1、	将温度控制目标设置在某一温度，等待一段时间待其稳定
+\par 2、	设计若干个距离控制点；
+\par 3、移动红外传感器的位置，每移动一定的距离后，记录红外传感器的位置和测得的辐射强度，并记录在表中，绘制辐射强度-距离图以及辐射强度-距离的平方图。
+\par 使用的传感器型号：  \ \ \ \ \  \ \ \ \      使用的辐射面：黑面
+
+\begin{tabular}{|p{4em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline 
+	距离S(mm)&  &           &  &          &   \\
+	\hline 
+     电压($10^{-6}$ V) &  &   &  &   &  \\
+	\hline 
+		距离S(mm)&  &           &  &          &   \\
+	\hline 
+	电压($10^{-6}$ V) &  &   &  &   &  \\
+	\hline 
+		距离S(mm)&  &           &  &          &   \\
+	\hline 
+	电压($10^{-6}$ V) &  &   &  &   &  \\
+	\hline 
+\end{tabular}
+\par 使用的传感器型号：       \ \ \ \ \   \ \ \ \  使用的辐射面：黑面
+
+\begin{tabular}{|p{4em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline 
+	距离S(mm)&  &           &  &          &   \\
+	\hline 
+	电压($10^{-6}$ V) &  &   &  &   &  \\
+	\hline 
+	距离S(mm)&  &           &  &          &   \\
+	\hline 
+	电压($10^{-6}$ V) &  &   &  &   &  \\
+	\hline 
+	距离S(mm)&  &           &  &          &   \\
+	\hline 
+	电压($10^{-6}$ V) &  &   &  &   &  \\
+	\hline 
+\end{tabular}
+\par 接下来我们测量并比较两个传感器对于固定距离改变温度的效果。具体地实验步骤如下：
+\par 测量物体在临界距离以内不同辐射距离S的辐射强度P
+\par 1、	选择某个在临界距离以内的位置
+\par 2、	设计若干个温度控制点
+\par 3、由于120℃的断电保护控制，设计的控温温度设置值不高于118℃。记录每个控温点（稳定后）的温度和辐射强度并填在表中； 
+\par 4、分析数据，探索辐射强度与辐射表面温度之间的关系，并绘制温度-辐射强度
+曲线图； 
+\par 使用的传感器型号：   \ \ \ \ \   \ \ \ \      使用的辐射面：黑面
+
+\begin{tabular}{|p{4em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline 
+	辐射面温度(摄氏度)&  &           &  &          &   \\
+	\hline 
+	电压($10^{-6}$ V) &  &   &  &   &  \\
+	\hline 
+\end{tabular}
+\par 使用的传感器型号：    \ \ \ \ \   \ \ \ \     使用的辐射面：黑面
+
+\begin{tabular}{|p{4em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline 
+	辐射面温度(摄氏度)&  &           &  &          &   \\
+	\hline 
+	电压($10^{-6}$ V) &  &   &  &   &  \\
+	\hline 
+\end{tabular}
+\subsection{对比不同物体的防辐射能力}
+\par 在这里我们对比相同厚度的透明塑料板和黄色纸张的防辐射能力，透明塑料板和黄色纸张都要放在所谓临界距离之内，或者如果不好掌握纸张和塑料板的临界距离，他们至少都应该放置的离传感器很近(但是还有一定的距离)，确保从传感器看来，视角中充满了这种防辐射材料。
+\par 首先测量透明塑料板的厚度，测量五次取平均值
+
+\begin{tabular}{|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline
+	厚度/mm &  &  & & &  \\
+	\hline 
+\end{tabular}
+\par 我们测量2张黄色纸张的厚度，测量五次取平均值
+
+\begin{tabular}{|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|p{5em}|}
+	\hline
+	厚度/mm &  &  & & &  \\
+	\hline 
+\end{tabular}
+\par 可以得到一张纸厚度的估计值$\delta x = $
+\par 有了这些，我们就可以估算多少纸张和塑料板的厚度相当：$N = \frac{D}{\delta x}$
+\par 之后我们进行有不同防辐射材料的情况下在相同距离处的辐射强度(电压值)，实验中要注意等待足够长时间使其达到热平衡。
+\par 控制温度$T=$
+
+\begin{tabular}{|p{10em}|p{10em}|}
+	\hline
+	防辐射材料 & 无 \\
+	\hline 
+	距离/mm &    \\
+	\hline 
+	电压/$10^{-6}$V & \\ 
+	\hline 
+\end{tabular}
+
+\begin{tabular}{|p{10em}|p{10em}|}
+	\hline
+	防辐射材料 & 透明塑料板\\
+	\hline 
+	距离/mm &    \\
+	\hline 
+	电压/$10^{-6}$V & \\ 
+	\hline 
+\end{tabular}
+
+\begin{tabular}{|p{10em}|p{10em}|}
+	\hline
+	防辐射材料 & 米黄色纸张 \\
+	\hline 
+	距离/mm &    \\
+	\hline 
+	电压/$10^{-6}$V & \\ 
+	\hline 
+\end{tabular}
+\newpage
+\section{分析与讨论}
+\begin{tabular}{|p{9em}|p{9em}|p{9em}|p{9em}|}
+	\hline 
+	专业：     &Physics       &年级：      & 17     \\
+	\hline
+	姓名：& 徐昊霆、谢梓冰 &学号：&17353071、17353070  \\
+	\hline
+	日期&     2019.5.31               & &  \\
+	\hline	
+	评分 & & 教师签名 & \\
+	\hline
+\end{tabular}
+\subsection{距离测量校正}
+\par 通过对传感器厚度$l_2$与辐射面处距离$l_1$的测量，我们计算得到他们的平均值
+\begin{eqnarray}
+l_1 &=& 53.0\ \rm{mm}\\
+l_2 &=& 1.9 \ \  \rm{mm}
+\end{eqnarray}
+所以我们得到实际测量的距离$x_{\rm measure}$与真实的距离的关系为(以毫米为单位)
+\begin{eqnarray}
+x &=& x_{\rm measure} -l_1 +\frac{l_2}{2} \\
+  &=&x_{\rm measure} -53.0 -\frac{1.9}{2} \\
+  &=& x_{\rm measure} - 53.95.
+\end{eqnarray}
+由于对于距离的测量较为准确，距离的修正对之后测量的误差可以忽略不计。
+\par 对于临界距离，我们有
+\begin{eqnarray}
+x_{\rm critical} &=& \frac{R}{\tan(7.27^{\circ})} \\
+&=& 178.9\rm{mm}
+\end{eqnarray}
+\subsection{传感器辐射强度的校正}
+\subsubsection{物理屏蔽的效果}
+\par 在实验原理及方案中提到，理论上，在距离比较小的时候，即$\frac{1}{x^2}$很大的时候，所测量得到的辐射强度大致应该是个常数。这是因为，测量到的辐射强度应该于视野内\bm{黑面的面积成正比}。那么实际测量得到的并不是这样，而是随着$x$的增大有缓慢的减小，这个减小是由于环境的影响(比如太阳、实验室灯光、人体辐射)和向环境的散热而导致的。
+\par 因此，在实验中我们对实验装置加入物理屏蔽。我们使用大的纸箱作为物理屏蔽\footnote{这个纸箱子由杨以钊(17353075),袁富铖(17353078)提供,实验时与他们共用一个}，并在箱子内表面贴上反射薄膜。物理屏蔽的效果图如图~\ref{fig_cover}所示
+\begin{figure}
+	\centering
+	\includegraphics[width=0.3\textwidth]{cover.jpg}
+	\caption{\color{red}实验时所使用的物理屏蔽。该物理屏蔽使用纸箱子做成，在箱子的内表面贴有反射薄膜(严谨地说，在纸箱子外部也应该贴由反射薄膜，但由于材料有限，我们只贴了内表面)。可见，这样的物理屏蔽对于整个实验装置提供了一个相当好的密封环境。外界太阳、环境、人体的辐射被有效遮挡。具体地，读者可参见防辐射能力的分析与讨论，不到0.2mm的纸张都有大约82\%的吸收率。}
+		\label{fig_cover}
+\end{figure}
+\par 首先我们探究物理屏蔽对于电压--距离关系的影响，我们取温度固定在$T = 60 ^\circ \rm{C}$，不断地改变距离与电压的关系，在这里我们使用的是\bm{带透镜的传感器}。实验结果如图~\ref{fig_data1}所示。
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{data1.jpg}
+	\caption{\color{red} 实验所测得的加物理屏蔽(红线)与不加物理屏蔽(蓝线)，所得到的电压与距离的关系，由曲线可以发现，两者几乎相同，这说明，尽管扣除了外界灯光、太阳、人体辐射的影响，得到的电压仍然没有明显变化。这说明，外界灯光、太阳、人体辐射对于传感器的影响几乎为0。在这个图我们也标出了拐点($x_{\rm critical}$)，这个拐点为人眼估计，故不是很精确，但是与理论的数值符合地很好！}
+	\label{fig_data1}
+\end{figure}
+\par 1.物理屏蔽对于电压和距离平方倒数关系的影响\par 如图我们可以看到，加上物理屏蔽与不加物理屏蔽对于\textbf{带透镜的传感器}并无明显影响。这说明尽管几乎完全扣除了外界环境的影响(外界灯光、太阳、人体),传感器接收到的数值仍然几乎不变。但是我们还应当看到，加入物理屏蔽之后，接收到的辐射电压有着很小($\simeq 1\%$)的降低。这说明外界环境(人体辐射、太阳、灯光)对于实验有大概$1\%$的误差。在我们实验室的实验精度内，这是可以忽略的。这里也完美地解答了在常规实验中的思考题"如何扣除人体对于传感器的影响"。我们得到的结论是:只要不是离传感器足够进，人体的辐射对于实验结果几乎没有影响。这个思考题常见的答案，如"测量人体的辐射并扣除"、甚至是"匍匐在地上做实验"，对于\textbf{带透镜的传感器}，都是不符合实际情况的。
+\par 2.物理屏蔽对于电压---温度四次方关系的影响
+在加入物理屏蔽和不加入物理屏蔽的情况下，我们对于相同距离处，电压和温度四次方进行了测量，其结果如图~\ref{fig_data0}所示，由图像我们可以看到，不论是带屏蔽还是不带物理屏蔽，我们发现电压随温度四次方的关系仍然很好的成立，线性相关系数$R^2\rightarrow 1$。这与理论预测的一致。而且通过实验我们发现，在加入了屏蔽之后，我们有
+\begin{equation}
+R^2 \simeq 1,
+\end{equation}
+几乎是完全的线性关系，所以我们可以说，加入了屏蔽之后，我们更好的验证了斯特藩--玻尔兹曼定律式~\ref{eq:boltzman}。
+\par 当然，我们上述的检验是基于\textbf{带透镜的传感器}，对于不带透镜的传感器，那么上述加屏蔽与不加屏蔽可能有较大区别。我们再次强调，我们期望看到的结果是实验曲线向理论曲线的靠拢，而不是单纯的辐射的数值降低。而上述的思考题可能重新变得有意义，由于时间所限，在实验报告提交时间之前，我们无法再去实验室检验这一点，我们将在期末考核答辩之前，去实验室做进一步的检验。届时结果请看期末考核答辩。我们期望，加入物理屏蔽之后对于带透镜的传感器具有\textbf{较大影响}。这将会说明，外界环境的辐射(人体、太阳、灯光)对于不带透镜的传感器影响较大。
+\par 还应当指出的是，热辐射传感器是一个红外波段的传感器，也就是说，它只接受热辐射。而热传导对它不会产生任何影响，所以使用热传导理论来分析误差理论上是完全错误的。也就是说，误差不可能源自于热传导，如空气温度的梯度变化，传感器外壳温度的变化等等。
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{data2.jpg}
+	\caption{\color{red} 实验所测得的加物理屏蔽(红线)与不加物理屏蔽(蓝线)，所得到的电压与温度四次方的关系。由曲线我们可以发现，电压(辐射强度)随着温度四次方成正比的关系仍然很好地成立，而且我们可以发现，屏蔽之后更加接近电压与温度四次方成正比的结论！相关系数更加趋近于1。}
+	\label{fig_data0}
+\end{figure}
+\subsubsection{辐射强度与电压信号的定量关系式}
+\par 在实验原理中，我们曾经得到了辐射强度与距离和温度的关系式~\ref{radiation}。这条式子就允许我们给定温度$T$和距离$d$，我们可以计算得到真正的辐射强度。在这个实验中，由于我们使用的是黑面，我们可以近似地取$\mathbb{A}=1$.我们将实验结果展示在图~\ref{fig_data2}中。通过我们的数据我们可以计算得到，辐射强度与电压成非常好的线性关系，经过计算得到，两者的\textbf{线性相关系数}
+\begin{equation}
+\rm{cor} = 0.999,
+\end{equation}
+可见，两者的线性关系很强。对于线性相关系数的具体的计算公式，请见附录A。
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\textwidth]{data3.jpg}
+	\caption{\color{red} 实验测得的辐射强度与输出电压的关系式，如图可见，他们具有十分好的线性关系。加入了屏蔽之后，他们的线性相关系数甚至十分接近于1，因此我们可以断言，电压和辐射的能量具有完全线性的关系。为了获得更加严谨的结果，我们在之后的讨论采取加入屏蔽的拟合结果。}
+	\label{fig_data2}
+\end{figure}
+\par 进一步由最小二乘法拟合可以得到\bm{辐射强度与输出电压的定量关系式}为
+\begin{equation}
+Q=kU+b.
+\end{equation}
+这就是辐射强度与输出电压的定量关系式。其中系数$k$和$b$的最佳值为
+\begin{eqnarray}
+k&= 2\times 10^{6}\\
+b&= -459.25
+\end{eqnarray}
+在这里电压是以微伏($\mu V = 10^{-6} V$)为单位，而辐射的能量是以焦耳为单位。我们发现曲线的截距$b\neq 0$,这是由于环境的辐射所致，如果在数据处理中扣除这一系数，我们就会得到完美的线性关系。而且在实验中我们还发现，加入屏蔽和不加入屏蔽的斜率也有很大变化，加入屏蔽之后，斜率明显增大(大概两倍),这是由于物理屏蔽的存在阻止了向环境散热所导致的。为了校准出严格的而结果，我们在这里使用了加入屏蔽之后的数据。
+\subsection{带透镜与不带透镜传感器的对比}
+\subsubsection{对于电压信号 -- 距离的影响}
+\par 在前面实验原理与方案中提到过，不论是带透镜的传感器还是不带透镜的传感器，在电压信号和距离曲线上，都会有一个转折点$x_{\rm critical}$。那么这个转折距离$x_{\rm critical}$将会随着是否带透镜而不同。对于不带透镜的传感器，由于其视角比较大，故$x_{\rm critical}$较小，而对于带透镜的传感器，由于透镜的存在，它的视角只有$7.27^{\circ}$，故它的$x_{\rm critical}$较大，较晚发生转折。更加明确地，$x_{\rm critical}$与视角$\theta$,辐射面半径$R$的关系为
+\begin{equation}
+x_{\rm critical} = \frac{R}{\tan \theta }.
+\end{equation}
+当$\theta$增大(不带透镜)时，$x_{\rm critical}$变小。
+\par 在这个实验中我们控制温度不变，不断地改变距离然后测量电压信号，得到带透镜的传感器与不带透镜传感器电压--距离关系曲线如图~\ref{fig_data3}所示。
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\textwidth]{data4.jpg}
+	\caption{\color{red} 实验测得的带透镜与不带透镜的电压信号--距离关系。由本图像我们可以发现，按照$1/x^2$增大的方向看，蓝色的线出现拐点的地方较晚，而红色的线出现拐点的地方较早。这说明不带透镜传感器的$x_{\rm critical}$较小，而带透镜的$x_{\rm critical}$较大，这和视角的关系是一致的，由于带透镜传感器的视角较小，故critical距离会较大，与理论完全一致。}
+	\label{fig_data3}
+\end{figure}
+由图~\ref{fig_data3}我们发现，实验完美地验证了我们的理论。
+\subsubsection{对于温度四次方关系的影响}
+\par 在实验原理与方案中，我们预测带透镜与不带透镜传感器接收到的电压与温度的关系都将是温度四次方成正比，只不过他们前面的比例系数不同。请注意，这里的比例系数不同并不是由于一个传感器是否带透镜或者不带透镜，而是设计时根本的型号不同。另外，透镜的存在会使电磁辐射在传播过程中有所损耗。故不能简单地分析比例系数不同来源的原因，在这个阶段，我们只能说比例系数不同来源于传感器的型号和构造不同，还有透镜的存在。
+\par 但是无论如何，我们将预测在距离固定在$x_{\rm critical}$以下时，我们仍能看到温度四次方成正比的关系，我们将实验数据展示在~\ref{fig_data4}中。
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{data5.jpg}
+	\caption{\color{red} 实验测得的带透镜与不带透镜的电压信号--距离关系。由本图像我们可以发现，不论是带透镜的传感器还是不带透镜的传感器，都完美地符合电压与温度四次方成正比的关系。只不过由于传感器型号不同，不同的传感器具体的公式不同。}
+	\label{fig_data4}
+\end{figure}
+\par 由我们的数据我们还可以计算得到，输出的电压$U$与温度的四次方$T^4$的线性相关系数分别为
+\begin{eqnarray}
+R_1^2 = 0.9998, \\
+R_2^2 = 0.9999,
+\end{eqnarray}
+由此可见，不论是带透镜的传感器，还是不带透镜的传感器，在我们取得距离上，都有较好的与温度四次方成正比的关系。由此，完美地验证了我们的理论。
+\subsection{不同物体的防辐射能力}
+\subsubsection{防辐射理论模型的进一步修正}
+\par 之前我们建立的防辐射的理论模型，是基于两个物体的\bm{厚度相同}这一假设建立的。但是在实验中我们发现，我们使用的材料厚度很难做到整齐一致，所以有必要从理论上建立辐射强度的吸收量与防辐射体厚度的关系。
+\par 之前我们说过，物体之所以能够防辐射，我们给出的解释是物质中的原子吸收了外界的辐射，然而这辐射与原子的共振频率相差很远，所以不能引起原子的共振，从而不能发出与原来强度相当的辐射，从而辐射相当于被吸收。那么相同的材料，如果面积相同但是尺寸不同，吸收的和厚度有什么关系呢？
+\par 首先我们假定，宏观上，一定量的原子吸收相同量的辐射，并且假设这些原子都处在辐射能够照射到的地方。所以，吸收的辐射就正比于\bm{原子数}，可以写成表达式为
+\begin{equation}
+\frac{\Delta R}{R} \propto N.\label{eq:propto}
+\end{equation}
+在式~\ref{eq:propto}中，我们定义了物理量$\frac{\Delta R}{R}$为\bm{吸收率}。
+\par 由于在实验中，我们控制两种材料的面积不变，故有
+\begin{eqnarray}
+N = \iiint_V n \ d^3 \vec{r},\label{eq:int}
+\end{eqnarray}
+其中$n$为粒子数密度，一般来说，它是坐标和时间的函数$n(x,y,z,t)$。在实验中我们考虑的材料比较i均匀，故我们可以说$n$是一个不随时间和位置变化的常数。将式~\ref{eq:int}带入~\ref{eq:propto}，我们得到
+\begin{eqnarray}
+\frac{\Delta R}{R} &=&  n B A L \\
+&=& \beta L, \label{eq:beta}
+\end{eqnarray}
+其中$B$是一个于材料有关的常数，$n$为材料的数密度，$A$为受到辐射的面积，$L$是材料的厚度。我们定义$\beta = nBA$为\bm{单位厚度的吸收率}。在本实验中，控制面积相同而比较不同材料的防辐射能力，就是要比较$\beta$。
+\par 这里还需要指出的是，上述线性关系只在厚度比较小的情况下成立，如果厚度比较大，可能不论什么材料，任何辐射都不能通过，而且对于很厚的材料，吸收的辐射强度也不可能超过100\%，对于厚度很大的公式，我们还没有足够的实验去获得经验公式，但是这是一个很好的研究题目。我们将进一步实验留给美好的未来。由于本实验考虑的材料厚度都很薄($\le 0.2 \rm{mm}$)，故可以认为我们的近似是成立的。
+
+\subsubsection{利用修正模型对于防辐射能力的比较}
+\par 
+请注意在本小节中，下标"1"表示透明塑料板，下标"2"表示米黄色纸张。
+\par 首先我们对测量到的两种不同材料的厚度取平均值,得到
+\begin{eqnarray}
+L_1 &=& 0.143  \ \ \rm{mm} \\
+L_2&=& 0.1876 \ \rm{mm}.
+\end{eqnarray}
+我们接下来计算我们实验中测到的吸收率
+\begin{eqnarray}
+\left(\frac{\Delta R}{R}\right)_1 &= \frac{862-410}{862} &= 52.37 \% \\
+\left(\frac{\Delta R}{R}\right)_2 &= \frac{862-109}{862} &= 82.35 \%.
+\end{eqnarray}
+进而由式~\ref{eq:beta}计算得到单位厚度的吸收率
+\begin{eqnarray}
+\beta_1 &=& \frac{52.37\%}{0.143 \rm{mm}} =366 \% / \rm{mm}\\
+\beta_2 &=& \frac{82.35\%}{0.1876 \rm{mm}} =438 \% / \rm{mm}.
+\end{eqnarray}
+\par 还需要再次强调的是，这里$\beta_1$和$\beta_2$是厚度很薄的值，对于厚度很大的情况，上述讨论不适用，具体地讨论请见上一节。
+\par 综合到我们测量的结果，我们发现透明塑料板的防辐射能力略微低于米黄色纸张的防辐射能力。这说明塑料板中原子的共振频率更加接近于红外波段。
+
+\appendix
+\addappheadtotoc
+\section{附录--统计方法}
+这一小节我们阐述实验报告使用的统计方法。我们使用\textbf{最小二乘法}来进行线性拟合。为了确定$t$个不可直接测量的未知量$X_1,X_2,\dots，X_t$的估计量$x_1,x_2,\dots，x_t$，对该$t$个未知量有函数关系的直接测量量$Y$进行$n$次测量，得到测量数据$l_1,l_2,\dots，l_n$。这里我们定义向量关系如下：
+\begin{equation}
+\vectors{X}=(X_1,X_2,\dots，X_t)^T
+\end{equation}
+\begin{equation}
+\vectors{Y}=(y_1,y_2,\dots，y_t)^T
+\end{equation}
+\begin{equation}
+\vectors{l}=(l_1,l_2,\dots，l_t)^T
+\end{equation}
+残差$\vectors{V}$表示为$\vectors{V}=\vectors{l}-\vectors{y}$。最小二乘法的表述即为：
+\begin{equation}
+\vectors{V}^T\vectors{P}\vectors{V}=\rm{minimum}
+\end{equation}
+其中$\vectors{P}$为权矩阵。如果待测量和我们要求的系数之间$\textbf{X}$有线性关系$\vectors{Y}=A\vectors{X}$,其中$A$为对应的观测量所组成的矩阵，那么把这个线性关系带入最小二乘法的表述，并求解一阶导数为0的式子，我们立刻可以得到待求系数$\textbf{X}$的最佳估计量：
+\begin{equation}
+\vectors{X}=(\vectors{A}^T \bm{P}\bm{A})^{-1}\bm{A}^T \bm{P} \bm{L}
+\end{equation}
+这就是所谓的“正规方程”。
+
+如果一个变量已经设置好（可认为这时这一变量没有误差），我们可以得到另一个变量的标准差，对于有$t$个参数的测量，而数据有$n$组，对于一般情况下的不等精度测量，标准差由下式给出：
+\begin{equation}
+\sigma=\sqrt{\frac{\sum_{i=1}^{n}P_i v_i^2}{n-t}}
+\end{equation}
+我们同样可以使用最小二乘法估计测得的未知量的精度，而未知量的精度一般使用\bm{协方差矩阵}来描述，协方差矩阵的定义为
+\begin{equation}
+\Sigma_X=E([X-E_X][X-E_X]^T)\label{cov}
+\end{equation}
+将上述规范方程带入\ref{cov}中，我们立刻可以得到不等精度未知物理量\bm{X}的协方差矩阵：
+\begin{equation}
+\Sigma_X=(\bm{A}^T \bm{P} \bm{A})^{-1} \sigma ^2
+\end{equation}
+\par 对于两列数据的线性相关系数，由下面的公式决定
+\begin{equation}
+R^2 = 1-\frac{\sum_{i=1}^{N}(y_i - \hat{y_i})^2}{\sum_{i=1}^{N}(y_i - \bar{y_i})^2},
+\end{equation}
+当线性相关系数的绝对值接近于1时，可以说他们由十分好的线性关系。
+
+\section{附录--原始数据}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{origin1.jpg}
+	\caption{\color{red} 原始数据记录表格}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{origin2.jpg}
+	\caption{\color{red} 原始数据记录表格}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{origin3.jpg}
+	\caption{\color{red} 原始数据记录表格}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{origin4.jpg}
+	\caption{\color{red} 原始数据记录表格}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.8\textwidth]{origin5.jpg}
+	\caption{\color{red} 原始数据记录表格}
+\end{figure}
+\end{document}

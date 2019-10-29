@@ -1,0 +1,26 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+CH1 = []
+CH2 = []
+t_factor = 50E-3
+input_file = "time.csv"
+
+with open(input_file) as file_obj:
+    lines = file_obj.readlines()
+    lines.remove(lines[0])
+    lines.remove(lines[0])
+    for line in lines:
+        temp = line.split(',')
+        CH1.append(temp[1])
+        CH2.append(temp[2])
+plt.figure(num=3,figsize=(8,5))
+
+plt.plot(CH1,CH2,color='blue',linewidth=1.0)
+# setting size of image
+plt.xlabel('CH1')
+plt.ylabel('CH2')
+plt.title('Figure in X-Y mode',fontsize='large',fontweight='bold')
+# save fig and close
+plt.savefig("time.png")
+plt.close()

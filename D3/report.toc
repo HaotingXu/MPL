@@ -1,0 +1,26 @@
+\contentsline {section}{\numberline {1}实验原理与方案}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}实验目的}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}仪器用具}{3}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}实验安全注意事项}{4}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}实验原理}{5}{subsection.1.4}
+\contentsline {subsubsection}{\numberline {1.4.1}经典保密通信简介}{5}{subsubsection.1.4.1}
+\contentsline {subsubsection}{\numberline {1.4.2}量子密钥分发及BB84协议}{6}{subsubsection.1.4.2}
+\contentsline {subsubsection}{\numberline {1.4.3}基于 BB84 协议的 QKD 实验}{8}{subsubsection.1.4.3}
+\contentsline {subsubsection}{\numberline {1.4.4}实验一--量子叠加(概率幅叠加)与经典混合(概率相加)的差异}{9}{subsubsection.1.4.4}
+\contentsline {subsubsection}{\numberline {1.4.5}实验二--单光子的探测及相应探测器效率的测量}{9}{subsubsection.1.4.5}
+\contentsline {subsubsection}{\numberline {1.4.6}实验三--单光子的标定}{10}{subsubsection.1.4.6}
+\contentsline {subsubsection}{\numberline {1.4.7}实验四--密钥分发过程中数据处理}{11}{subsubsection.1.4.7}
+\contentsline {subsection}{\numberline {1.5}实验前思考题}{12}{subsection.1.5}
+\contentsline {section}{\numberline {2}实验步骤与记录}{16}{section.2}
+\contentsline {subsection}{\numberline {2.1}实验一}{16}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}实验二--单光子的探测及相应探测器效率的测量}{19}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}实验三--单光子的标定}{20}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}实验四步骤}{21}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}实验中遇到的问题记录}{23}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}实验原始记录与教师签名}{25}{subsection.2.6}
+\contentsline {section}{\numberline {3}分析与讨论}{29}{section.3}
+\contentsline {subsection}{\numberline {3.1}实验一--经典混合与量子混合的差异}{29}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}实验二--单光子的探测及相应探测器效率的测量}{29}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}实验三--单光子的标定实验}{30}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}实验四--量子秘钥分发实验}{30}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}实验后思考题}{34}{subsection.3.5}

@@ -1,0 +1,800 @@
+\documentclass[11pt,a4paper]{ctexart}
+\input{macros.tex}
+\graphicspath{{figure/}}
+\usepackage{enumerate}
+%\usepackage{fancyhdr}
+%\cpic{<尺寸>}{<文件名>}}用于生成居中的图片。
+\newcommand{\cpic}[2]{
+\begin{center}
+\includegraphics[scale=#1]{#2}
+\end{center}
+}
+%\cpicn{<尺寸>}{<文件名>}{<注释>}用于生成居中且带有注释的图片，其label为图片名。
+\newcommand{\cpicn}[3]
+{
+\begin{figure}[H]
+\cpic{#1}{#2}
+\caption{\color{red}#3\label{#2}}
+\end{figure}
+}
+
+\crefname{equation}{}{}
+\crefname{figure}{图}{图}
+\crefname{footnote}{注释}{注释}
+\crefname{table}{表}{表}
+\title{实验D1 锁相放大器与弱信号测量(选做)}
+\begin{document}
+\maketitle
+\begin{tabular}{|p{8em}|p{8em}|p{8em}|p{5em}|}
+\hline
+		实验方案 &实验记录  &分析讨论 &总成绩\\
+		\hline
+		        &          &          &  \\
+	    \hline
+	\hline 
+	年级、专业： &17级物理学 &组号：& 6 \\
+	\hline
+	姓名：& 徐昊霆 &学号：&17353071  \\
+	\hline
+	日期：& \today &教师签名： &  \\
+    \hline	
+        \end{tabular}
+
+\begin{enumerate}
+ \item 实验报告由三部分组成：
+ \begin{enumerate}
+  \item[1)]预习报告：（提前一周）认真研读\textbf{\uline{实验讲义}}，弄清实验原理；实验所需的仪器设备、用具及其使用（强烈建议到实验室预习），完成讲义中的预习思考题；了解实验需要测量的物理量，并根据要求提前准备实验记录表格（由学生自己在实验前设计好，可以打印）。预习成绩低于50\%者不能做实验{\color{red} (实验D2和D3需要提前一周的周四完成预习报告交任课老师批改，批改通过后，才允许做实验)}。
+
+  \item[2)]实验记录：认真、客观记录实验条件、实验过程中的现象以及数据。实验记录请用珠笔或者钢笔书写并签名（{\color{red}用铅笔记录的被认为无效}）。{\color{red}保持原始记录，包括写错删除部分，如因误记需要修改记录，必须按规范修改。}（不得输入电脑打印，但可扫描手记后打印扫描件）；离开前请实验教师检查记录并签名。
+  \item[3)]分析讨论：处理实验原始数据（学习仪器使用类型的实验除外），对数据的可靠性和合理性进行分析；按规范呈现数据和结果（图、表），包括数据、图表按顺序编号及其引用；分析物理现象（含回答实验思考题，写出问题思考过程，必要时按规范引用数据）；最后得出结论。
+ \end{enumerate}
+ \textbf{实验报告}就是预习报告、实验记录、和数据处理与分析合起来，加上本页封面。
+ \item 每次完成实验后的一周内交\textbf{实验报告}。
+ \item 除实验记录外，实验报告其他部分建议双面打印。
+\end{enumerate}
+\newpage
+\tableofcontents
+\newpage
+\section{实验原理与方案}
+\subsection{实验目的}
+\begin{enumerate}
+ \item[1.]了解锁相放大器工作原理和特点，掌握锁相放大器基本参数含义及锁相放大器的基本 操作;复习示波器的使用；（实验内容 1）
+  \item[2.]掌握用锁相放大器检测出湮没于噪声中的弱信号方法；（实验内容 2）
+  \item[3.]通过本实验更加直观的了解方波的高频成分，并掌握用锁相放大器检测微弱信号中的谐波；（实验内容 3）
+\item[4.]掌握交流四引线法精密测量小阻抗的原理和方法，理解相位的物理含义及电压与电流之间相位差的测量方法；（实验内容 4，探索）
+\item[5.] 学习 VISA 接口协议，通过 LabVIEW 环境用 PC 机控制锁相放大器数据采集；（实验内容 4）
+\item[6.]了解 PN 结结电容，探究变容二极管内 PN 结电容与反偏电压的关系；（实验内容 5）
+\item[7.] 通过实验了解热噪声的特征，理解热噪声的本质及其统计意义。（实验内容 6，探索）
+\end{enumerate}
+
+
+\subsection{仪器用具}
+\begin{table}[H]
+\cpic{0.4}{t1}
+\caption{弱信号检测实验仪器用具}
+\end{table}
+
+\subsection{实验安全注意事项}
+
+1. OE1022 锁相放大器输入端不能接入强信号;接入信号需限定在 1V 以下。
+
+2. OE4004 稳流源的电流输出不能直接接入 OE1022 锁相放大器的输入端。
+
+\subsection{实验原理}
+\subsubsection{实验三--微弱信号多谐波测量实验}
+方波是一种非正弦形式的信号，理想方波只有高电平和低电平两种状态，且占空比为 50\%。设方波的峰峰值为$E$，角频率为$\omega$，假设方波的表达式为
+\beq
+f(t) = \left\{\begin{aligned}
+&\frac{E}{2},\, -T/2 < x< 0\\
+&-\frac{E}{2},\, 0<x<T/2
+  \end{aligned}
+  \right.
+\eeq
+其中周期$T$与角频率的关系为$T = 2\pi / \omega$。将其分解为频率为$\omega$整数倍正弦函数的叠加
+\beq
+f(t) = \sum_n c_n \sin(n\omega t )
+\eeq
+根据公式
+\beq
+\frac{2}{T} \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt = \delta_{mn}
+\eeq
+因此将方波的表达式两边同时乘$\sin(m\omega t)$并进行积分
+\beq
+\int_{-T/2}^{T/2} f(t) \sin(m\omega t) dt = \sum_n c_n \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt
+\eeq
+其中等式右边为
+\beq
+\sum_n c_n \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt =\frac{T}{2}\sum_n c_n \delta_{mn}
+\eeq
+故有
+\beq
+c_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \sin(n\omega t) dt
+\eeq
+进行计算，得到系数
+\beq
+\begin{aligned}
+  c_n &=& \frac{2}{T}\int_0^{T/2} E \sin(n\omega t)dt \\
+  &=& \frac{2E}{\omega T} \frac{1}{n} \left[1-(-1)^n \right] \\
+\end{aligned}
+\eeq
+故
+\beq
+c_n = \left\{ \begin{aligned}
+  &\frac{2E}{\pi} \frac{1}{n},\, \mathrm{n\,is\, odd}\\
+    & 0,\, \mathrm{n\, is\, even}
+  \end{aligned}
+  \right.
+\eeq
+最终的展开表达式为  
+\beq
+f(t) = \sum_n f_n(t) = \frac{2E}{\pi}\left[ \sin(\omega t) + \frac{1}{3}\sin(3\omega t)+\cdots + \frac{1}{n}\sin(n\omega t)+\cdots\right]
+\eeq
+上式中任意一项均是一个完备的正弦波信号，根据该正弦波信号与方波的频率倍数关系
+不同，可称其为n次谐波：
+\beq
+f_n(t) = \frac{2E}{n\pi} \sin(n\omega t)
+\eeq
+实际测量值为正弦信号的均方根平均值，它与峰峰值的关系为
+\beq
+V_{\rm rms} = \frac{V_p}{\sqrt{2}} = \frac{V_{pp}}{2\sqrt{2}}
+\eeq
+对于目标谐波而言，高次谐波就相当于“噪声”的存在，故谐波测量本质上也是一种从噪声中提取目标信号的过程。
+\cpicn{0.5}{square_wave_exp}{微弱信号多谐波测量实验电路图}
+后面板 TTL OUT 的输出阻抗大小为 250$\Omega$,输出电压为$5.00V$,配合实验电路中的 80dB的电阻衰减模块,衰减为 500$\mu$V 的方波信号,通过 OE1022 可以测出方波基波以及各次谐波信号。理论上各次波的测量值为
+\beq
+V_{\rm nrms} = \frac{2E}{\sqrt{2}n\pi}
+\eeq
+其中，基波的测量值为
+\beq
+V_{\rm rms} = \frac{2\times 500}{\sqrt{2}\times1\times \pi} = 225 \mathrm{\mu V}
+\eeq
+
+\subsubsection{微小阻抗测量实验}
+影响小阻抗测量的因素有:(1)引线电阻,(2)引线与样品的接触电势,(3)因两引线
+与样品接触点的温度不同所产生的温差电势。测量小阻抗不能单纯地提高通过样品的电流,
+因为增大焦尔热更容易导致温差电势。当待测样品电阻值与引线电阻值相当时,常规二引线
+测量电阻就不可避免地包含了导线的电阻;通过四引线法把电流引线与电压测量引线分开,
+直接测量样品的电压降,可扣除引线电阻。接触电势和热电势是直流电压,用直流四引线法
+测量时,是通过反向测量电流测得的电压与正向电流没得的电压差来消除接触电势和热电势
+的;而对于交流法测量,电流方向本身就是正、反向变化的,接触电势与热电势自然被消除。
+\subsubsection{应用锁相放大器的四引线法测量小阻抗}
+有两种方案实现交流四引线法测量微小阻抗(参见~\cite{lec})。这里所谓微小阻抗指微欧、微亨。
+一种用稳流电源,即交流电流振幅不随负载变化;另一种是允许测量电流变化,但几乎
+同时(时间间隔范围内负载不发生变化)测量电流和负载电压降,而电流是通过测量与待负
+载串联的标准电阻上的压降得到。
+
+第一种方案可以用一台锁相放大器实时测量负载的阻抗(及其变化)，稳流源使用OE4004电流源,它通过锁相放大器输出信号控制,频率与控制信号相同,电流在 1.00--100mA 范围内与控制信号的振幅相关,即锁相放大器控制信号为 1.00V 时,稳流源输出电流为 100mA。
+
+按四线线法连接样品(如~\cref{tiny_resis}所示),对于纯电阻,用 OE1022 测量的样品电压降除
+以稳流源电流,即可得到负载阻抗值。对于非纯电阻,需要通过获得样品电压降相对于通过
+样品电流的相位差来确定阻抗的成分和大小。
+\cpicn{0.5}{tiny_resis}{交流四引线法测量微小电阻接线图(我认为此图有所不妥，此图相当于将电源信号直接接入到锁相放大器signal in端，在实验中如果$Z_x$为一个电容，我们发现扫频时无论如何得到的信号不变。因此下面的一些图才是真正测量时所用的图。}
+
+样品:
+\begin{enumerate}
+\item 精密电阻(1.0$\Omega$, 0.1$\Omega$);
+\item  厚膜电阻(1.0$\Omega$, 10$\Omega$, 50$\Omega$),特点:电感、电容极小,适用于电压取样;
+ \item 自备电阻 1:用 500mm 长的$\phi$1.0 的漆包线(或电线)对折为 250mm 长的双线后绕在直径 10mm 的圆管上;因对折线正反方向电流抵消,(在工艺误差范围内)得到的是一个纯线绕电阻;
+ \item 自备电阻 2:用 500mm 长的$\phi$1.0 的漆包线(或电线)直接绕在 10mm 的圆管上,因此,除样品2的电阻外,样品3还有绕成线圈的电感;
+\end{enumerate}
+
+亦可自己并亲手绕制电阻和电感。
+
+稳流电源输出电流
+\beq
+\tilde{I} = I_S e^{i(\omega t +\theta_I)}
+\eeq
+样品两端输出的电压为
+\beq
+\tilde{V} = V_S  e^{i(\omega t +\theta_V)}
+\eeq
+其中,$\theta_V$和$\theta_I$ 分别是样品电压和电流的相位;从上面两式中计算出阻抗值:
+\beq
+\tilde{R} = \frac{ V_S  e^{i(\omega t +\theta_V)}}{I_S e^{i(\omega t +\theta_I)}} = \frac{V_S}{I_S} \left[\cos(\theta_V - \theta_I)+i\sin(\theta_V - \theta_I)\right]
+\eeq
+其中，$\frac{V_S}{I_S}\cos(\theta_V - \theta_I)$为纯电阻值。
+
+建议选用扫频功能测量阻抗随频率的变化,并通过软件记录数据,以降低人工记录强
+度。数据处理时,从记录数据中取多点平均以降低统计误差。但要注意时间常数、扫频时间
+及采样频率之间的关系,才能获得稳定可靠的数据。
+
+保存数据功能即保存阻抗测量或扫频测量得到的结果,只有在完成测量工作后,保存数
+据的按钮才能够被选择。数据会以 Excel 文件格式保存于程序路径。
+
+
+\subsection{实验前思考题}
+\subsubsection{实验三}
+1. 信号发生器如何产生方波?
+
+信号发生器通过不同三角波的叠加得到方波。设方波的峰峰值为$E$，角频率为$\omega$，假设方波的表达式为
+\beq
+f(t) = \left\{\begin{aligned}
+&\frac{E}{2},\, -T/2 < x< 0\\
+&-\frac{E}{2},\, 0<x<T/2
+  \end{aligned}
+  \right.
+\eeq
+其中周期$T$与角频率的关系为$T = 2\pi / \omega$。将其分解为频率为$\omega$整数倍正弦函数的叠加
+\beq
+f(t) = \sum_n c_n \sin(n\omega t )
+\eeq
+根据公式
+\beq
+\frac{2}{T} \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt = \delta_{mn}
+\eeq
+因此将方波的表达式两边同时乘$\sin(m\omega t)$并进行积分
+\beq
+\int_{-T/2}^{T/2} f(t) \sin(m\omega t) dt = \sum_n c_n \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt
+\eeq
+其中等式右边为
+\beq
+\sum_n c_n \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt =\frac{T}{2}\sum_n c_n \delta_{mn}
+\eeq
+故有
+\beq
+c_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \sin(n\omega t) dt
+\eeq
+进行计算，得到系数
+\beq
+\begin{aligned}
+  c_n &=& \frac{2}{T}\int_0^{T/2} E \sin(n\omega t)dt \\
+  &=& \frac{2E}{\omega T} \frac{1}{n} \left[1-(-1)^n \right] \\
+\end{aligned}
+\eeq
+故
+\beq
+c_n = \left\{ \begin{aligned}
+  &\frac{2E}{\pi} \frac{1}{n},\, \mathrm{n\,is\, odd}\\
+    & 0,\, \mathrm{n\, is\, even}
+  \end{aligned}
+  \right.
+\eeq
+最终的展开表达式为  
+\beq
+f(t) = \sum_n f_n(t) = \frac{2E}{\pi}\left[ \sin(\omega t) + \frac{1}{3}\sin(3\omega t)+\cdots + \frac{1}{n}\sin(n\omega t)+\cdots\right]
+\eeq
+信号发生器就是通过上面的式子来产生方波。
+
+2. 能检测到方波的 2 次谐波吗?为什么?(请在实验时测量验证)
+
+由思考题的傅里叶变换过程可知，方波的二次谐波的傅里叶级数的系数为0，在实验中，当没有噪声时，我们观察到二次谐波信号几乎为0，若有噪声时，能检测到微弱的二次谐波信号，但是相比于奇数次谐波，二次谐波的信号远远小于奇数谐波的信号，因此可以近似认为，检测到的二次谐波信号为0。
+
+3. (选)用示波器可以测量方波的谐波吗?(请在实验时测量验证)
+
+可以用示波器的傅里叶变换功能检测方波的谐波，在实验中我们将方波信号输入到示波器中，并使用示波器自带的傅里叶变换功能，得到的图像如下图所示。
+\cpicn{0.5}{square_wave}{示波器检测到的方波的谐波信号}
+可见频域上得到的图像一方面在不断震荡，这是由于偶次项谐波信号为0所致；另一方面，频域上振动的峰值随着$n$增大近似以$1/n$减小，恰好验证了我们关于奇数次谐波的系数随着$1/n$衰减的事实。
+
+\subsubsection{实验四}
+本实验内容之方案一按研究型实验要求。锁相放大器的好处是超强的信号提取能力,
+但作为交流法,其测量结果包含更多的信息,如相位信息。除纯电阻以外,电感、电容都
+会对测量结果产生影响。
+(例如,通过改变导线的弯曲形状来改变其电感。)
+
+1. 交流四引线法是如何消除引线电阻、热电势和接触电势的影响的?
+
+通过四引线法把电流引线与电压测量引线分开,直接测量样品的电压降,可扣除引线电阻;
+利用交流法测量,电流方向本身就是正、反向变化的,接触电势与热电势自然被消除。
+
+2. 本实验介绍的测量方法属于直接测量还是间接测量?
+属于间接测量,测量时得到的结果为电流、电压、相位需要代入式(D1-30)和(D1-31)中计算
+出阻抗,所以属于间接测量。
+
+3. 如何通过实验判断待测电阻是否纯电阻?如果不是,则如何从中分离出纯电阻?
+
+通过实验,测量待测样品的电压相位以及通过样品的电流相位,如果二者相位一致,则可
+以判断电阻为纯电阻,否则不是;
+
+若待测电阻中存在感抗或者容抗,可以通过串联大小合适的电容箱或者电感箱,以消除待
+测电阻的感抗或容抗,提取待测电阻的纯电阻成分。
+
+4. 如何测量稳流源输出电流的相位?【警告:不能将稳流的输出直接接入锁相放大器
+  的输入端。】请推导待测样品的交流阻抗与锁相放大器测量值之间的关系。
+
+将待测样品更换为厚膜电阻,测量其两端电压的相位,由于厚膜电阻电感、电容极小,
+其两端电压相位与通过它的电流相位一致,从而测量得到稳源输出电流的相位。稳流电源输出电流
+\beq
+\tilde{I} = I_S e^{i(\omega t +\theta_I)}
+\eeq
+样品两端输出的电压为
+\beq
+\tilde{V} = V_S  e^{i(\omega t +\theta_V)}
+\eeq
+其中,$\theta_V$和$\theta_I$ 分别是样品电压和电流的相位;从上面两式中计算出阻抗值:
+\beq
+\tilde{R} = \frac{ V_S  e^{i(\omega t +\theta_V)}}{I_S e^{i(\omega t +\theta_I)}} = \frac{V_S}{I_S} \left[\cos(\theta_V - \theta_I)+i\sin(\theta_V - \theta_I)\right]
+\eeq
+其中，$\frac{V_S}{I_S}\cos(\theta_V - \theta_I)$为纯电阻值。
+
+5. (选)OE1022锁相放大器(包括其测量软件)带有扫频功能,是否可以利用该功能对不同的内部参考频率实现自动测量?
+
+可以利用该功能对不同的内部参考频率实现自动测量;在锁相放大器前面板的菜单栏选
+择[REF/PHASE]子菜单进入,<Ref.source>选择<Internal Sweep>内部参考信号扫频。
+
+\newpage
+\section{实验步骤与记录}
+\begin{tabular}{|p{8em}|p{8em}|p{8em}|p{8em}|}
+	\hline 
+	专业：     &Physics       &年级：      & 17     \\
+	\hline
+	姓名：& 徐昊霆 &学号：&17353071  \\
+	\hline
+	室温：&                    &实验地点 & 教学楼 \\
+	\hline	
+	学生签名： & & 评分： & \\
+	\hline
+	日期： & \today & 教师签名：&  \\
+	\hline
+\end{tabular}
+
+\subsection{实验三--微弱信号多谐波测量实验}
+实验步骤：
+
+1)用BNC-BNC信号线连接OE1022后面板的“TTL OUT”接口与教学实验箱本实验框图中的“TTL IN”接口,方波峰峰值为 5.00V,经过80dB(10000 倍)的衰减,输出$E$峰峰值为500$\mathrm{\mu V}$的方波信号;
+
+(2)用 BNC-BNC 信号线连接教学实验箱本实验框图中的“TTL OUT”接口与OE1022的“A/I”接口;
+
+(3)按下前面板 REF PHASE 按键进入子菜单。REF PHASE子菜单界面如图~\ref{refphase}所示。其中 Harmonic 二级子菜单中设置测量的谐波次数,使用键盘输入可选择所需阶次。
+同时测量输入方波的 3 次谐波和 5 次谐波的操作方法:在 REF PHASE 子菜单中,按下软键 4 选择谐波功能,进入 Harmonic 二级子菜单。如图 D1-31 所示。
+\cpicn{0.5}{refphase}{REF PHASE子菜单}
+
+按下软键 1,在数字键盘上输入数字“3”,并按下“ENTER”键以确认;再按下软键 2,在
+数字键盘上输入数字“5”,此时测量出来的值即为输入信号的 3 次和 5 次谐波。选择 DISPLAY
+子菜单,在 Display\&scale 选项中选择 Full,Type 选择 List,即可查看测得的谐波(谐波 1 对应 Xh1、Yh1、Rh1 和 θh1,谐波 2 对应 Xh2、Yh2、Rh2 和 θh2,)
+。测量结果如图 D1-32 所示。
+
+(4)记录测得实验结果,多次改变 OE1022 中谐波奇次值,重复上述实验;
+
+(5)利用公式计算方波各高次谐波值,并与实验测量结果对比。
+
+给方波加入噪声后,锁相放大器还能检测到方波的多次谐波吗?请制定测量方案并验证
+它。(信噪比调节到约-26dB 或-46dB。)
+\begin{table}[H]
+  \caption{微弱信号多谐波测量实验记录}
+  \cpic{0.4}{square_table}
+\end{table}
+
+
+\subsection{实验四--微小阻抗测量实验}
+
+
+(1)按~\cref{tiny_resis}连接好测量电路;
+
+a) 用 BNC-夹具信号线将待测元件电压线连接到 OE1022 的信号输入 signal in;
+
+b) 用 BNC-BNC 信号线连接 OE1022 的“SINE OUT”接口与 OE4004 的“Vin ”接口;
+
+c) 用 BNC 夹具信号线连接 OE4004 的“Vout ”接口与样品的电流线;
+
+(2)使用 USB 线连接 OE1022(USB 接口在后面板)与 PC 机,并在 PC 机上打开阻抗
+测量的 LabVIEW 程序 OE1022\_Console\_CN。
+
+(3)在界面或 OE1022 的 REF PHASE 菜单下,Ref. source 选择 Internal,Ref.
+
+(4)按下前面板 GAIN TC 按键进入子菜单,在 Sensitivity 中选择 1V
+Reserve 选择 Normal, Time Constant 选择 100ms, Filter DR
+dB/oct 选择24。
+
+(5) 在程序OE1022\_Console\_CN设置扫频类型对数扫频类型,扫频步进为
+100\%,开始频率 250Hz,扫频截止频率128.000kHz,步进时间1000ms,
+Sine output 设置为0.600Vrms,采样率1000;
+
+(6) 开始测量,记录稳源电流值$I_S$, 扫频完成后获得EXCEL文件,将文件中
+的电压、相位记录样品电压、样品电压相位中;
+
+(7) 将待测元件更换为10$\Omega$的厚膜电阻,按原电路连接;
+
+(8) 开始扫频,完成后获得EXCEL文件,将文件中的相位记录到电流相位中;
+
+(9) 分析数据。
+
+{\color{red} 注意：面包板会引入接触电阻，四引线法如何接电压线?
+
+用BNC-夹具信号线连接电压线与OE1022 信号输入端。}
+
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+测量电流$I_S/\mathrm{mA}$ &      & 样品标称电阻$R_0/\Omega$ &        &      \\ \hline
+频率   & 电流相位 & 样品电压& 样品电压相位 & 测量电阻 \\
+$f/\mathrm{Hz}$&$\theta_I/\mathrm{deg}$&$V_S/V$&$\theta_V$/deg &$R_m/\Omega$ \\\hline
+250 &      &        &        &      \\\hline
+500 &      &        &        &      \\\hline
+1000 &      &        &        &      \\\hline
+2000 &      &        &        &      \\\hline
+8000&      &        &        &      \\\hline
+16000 &      &        &        &      \\\hline
+32000 &      &        &        &      \\\hline
+64000 &      &        &        &      \\\hline
+128000&      &        &        &      \\\hline
+&      &        &        &      \\\hline
+\end{tabular}
+
+单通道锁相放大器外部参考信号法测小阻抗——设计并验证 2
+
+\cpicn{0.5}{hint_2}{单通道锁相放大器外部参考信号测量小阻抗的原理图。}
+(1) 按图D1-33 连接好测量电路;
+
+a) 用BNC-BNC信号线连接信号发生器CH1与OE004 “V in ”接口;
+
+b) 用BNC-夹具信号线连接OE4004 的“V out ”接口与厚膜电阻R s ,待测元件Z x
+的一侧电流线;
+
+c) 用面包板将R S ,Z x 串联;
+
+d) 用 BNC-夹具信号线将待测元件电压线连接到 OE1022 的信号输入 signal
+in;
+
+e) 用 BNC-夹具信号线将厚膜电阻电压线连接到 OE1022 的参考信号输入Ref
+in;
+
+(2) 使用USB 线连接 OE1022(USB 接口在后面板)与PC 机,并在PC 机上打
+开阻抗测量的 LabVIEW 程序OE1022\_Console\_CN。
+
+(3) 在界面或OE1022 的 REF PHASE 菜单下,Ref. source 选择 External,
+Ref;
+
+(4) 按下前面板 GAIN TC 按键进入子菜单,在 Sensitivity 中选择 1V
+Reserve 选择 Normal, Time Constant 选择 100ms, Filter DR dB/oct选择24。
+
+(5) 在信号发生器设置扫频类型对数扫频类型,每秒两倍频程,开始频率
+250Hz,扫频截止频率128.000kHz,步进时间1000ms, Sine output 设置为
+0.600Vrms,采样率1000;
+
+(6) 开始测量,记录稳源电流值$I_s$ ,扫频完成后获得EXCEL文件,将文件中的电
+压、相位记录样品电压、样品电压相位中;
+
+(7) 将待测元件更换为10Ω 的厚膜电阻,重复(4)扫频;
+
+(8) 开始扫频,完成后获得EXCEL文件,将文件中的相位记录到电流相位中;
+分析数据,验证方案一测量结果。
+
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+测量电流$I_S/\mathrm{mA}$ &      & 样品标称电阻$R_0/\Omega$ &        &      \\ \hline
+频率   & 电流相位 & 样品电压& 样品电压相位 & 测量电阻 \\
+$f/\mathrm{Hz}$&$\theta_I/\mathrm{deg}$&$V_S/V$&$\theta_V$/deg &$R_m/\Omega$ \\\hline
+250 &      &        &        &      \\\hline
+500 &      &        &        &      \\\hline
+1000 &      &        &        &      \\\hline
+2000 &      &        &        &      \\\hline
+8000&      &        &        &      \\\hline
+16000 &      &        &        &      \\\hline
+32000 &      &        &        &      \\\hline
+64000 &      &        &        &      \\\hline
+128000&      &        &        &      \\\hline
+&      &        &        &      \\\hline
+\end{tabular}
+\subsection{实验中遇到的问题记录}
+在实验中我们发现，当使用外部参考信号测量微小阻抗时，连好电路后测到的电压值总是比实际应当测到的电压小10倍，经过排查发现，信号发生器、电流源、锁相放大器、面包板、电阻均无问题，但是一链接好电路就会出现小10倍的现象。我们因此放弃了外部参考信号测量微小阻抗的实验，改为内部参考信号。
+\subsection{实验原始记录}
+其中实验四的原始记录见~\cite{github}，下面展示实验三的原始记录。
+\cpic{0.4}{record_1}
+\cpic{0.4}{record_2}
+\subsection{教师签名}
+\cpic{0.3}{sign}
+\newpage
+\section{分析与讨论}
+\begin{tabular}{|p{7em}|p{7em}|p{7em}|p{7em}|}
+	\hline 
+	专业：     &Physics       &年级：      & 17     \\
+	\hline
+	姓名：& 徐昊霆 &学号：&17353071  \\
+	\hline
+	日期&  \today              & &  \\
+	\hline	
+	评分 & & 教师签名 & \\
+	\hline
+\end{tabular}
+
+\subsection{实验三--微弱信号多谐波测量实验}
+1.未加入噪声的情况：
+在实验中我们将产生的信号通过-80dB的衰减，得到峰峰值为$500\mu V$的信号，故得到的谐波信号的理论值为
+\be
+f_n = \frac{2E}{n\sqrt{2}\pi}=\frac{1000}{\pi\sqrt{2} n},\, \mathrm{n\, is\, odd}
+\ee
+上面的系数$\sqrt{2}$是因为我们测得的是谐波信号的有效值。我们将实验测得的$n$次谐波($n$为奇数)的峰值作图并利用线性函数和$1/n$作拟合，拟合结果如图~\ref{without_noise.jpg}所示。
+\cpicn{0.5}{without_noise.jpg}{不加噪声时锁相放大器提取出的$n$次谐波和它的拟合曲线。}
+拟合的相关系数
+\be
+R^2 = 0.999999
+\ee
+得到斜率的拟合值
+\be
+k = 228.3 \pm 0.1 \mathrm{\mu V_{rms}}
+\ee
+根据理论得到的理论斜率值为
+\be
+k_{\rm theoretical} = \frac{1000}{\pi\sqrt{2}} = 225.08  \mathrm{\mu V_{rms}}
+\ee
+可见实验中测到的谐波信号与理论值十分接近，相对误差只有$1\%$。
+
+2.加入噪声的情况：在本实验中我们除了加入了-80dB的衰减，我们还额外加入了-40dB的噪声，也就是说，现在噪声是信号的100倍，将此信号接入示波器中，我们发现根本观测不到信号。直接使用示波器的傅里叶变换功能，发现得不到我们想要的频谱，因为正如必做实验所验证的，实验箱产生的噪声为白噪声，而白噪声意味着在各个频段都有信号。但是将这个信号接入到锁相放大器中，利用锁相放大器强大的提取信号的功能，我们还是成功提取到了谐波信号。将提取到的谐波信号($n$为奇数)画图并拟合如图~\ref{with_noise.jpg}所示。
+\cpicn{0.5}{with_noise.jpg}{加入-40dB噪声时锁相放大器提取出的$n$次谐波和它的拟合曲线。}
+
+拟合的相关系数
+\be
+R^2 = 0.999999
+\ee
+得到斜率的拟合值
+\be
+k = 223.0 \pm 0.1 \mathrm{\mu V_{rms}}
+\ee
+根据理论得到的理论斜率值为
+\be
+k_{\rm theoretical} = \frac{1000}{\pi\sqrt{2}} = 225.08  \mathrm{\mu V_{rms}}
+\ee
+可见实验中，即使加入了100倍的噪声，测到的谐波信号与理论值十分接近，相对误差只有$1\%$。
+
+\subsection{实验四--微小阻抗测量实验}
+\subsubsection{理论分析}
+作为对于实验原理的补充，我先来计算电感和纯电阻并联产生的阻抗。假设检测到系统两端的电压为
+\beq
+U = U_0 e^{i\omega t}
+\eeq
+根据欧姆定律，在电阻两端
+\beq
+U_R = IR
+\eeq
+根据电感的定义，在电感两端
+\beq
+U_L=  L \frac{dI}{dt}
+\eeq
+根据基尔霍夫定律，得到一个一阶的微分方程
+\beq
+L\frac{dI}{dt}+RI = U_0 e^{i\omega t}
+\eeq
+作试探解$I = I_0 e^{i\omega t}$，带入上面的方程得到
+\beq
+I_0 = \frac{U_0}{R+i\omega L}
+\eeq
+故得到复阻抗
+\beq
+\tilde{Z} = R+i\omega L = \sqrt{R^2 + \omega^2L^2}e^{i\theta_0}
+\eeq
+其中
+\beq\label{theta}
+\tan\theta_0 = \frac{\omega L}{R}
+\eeq
+因此在实验中，我们测得的相位差的正切值应该与频率成正比，并可以由比例系数算出系统电感和电阻的比值，通过电压和电流比值，并使用函数$\sqrt{R^2+\omega^2L^2}$进行耦合，可以计算得到系统的$R$值和$L$值。但是上述方法只在电容很小的时候适用，在实验中，如果测得是我们自己绕的电感，那么电容虽然很小，但是不可忽略。在分析与讨论中，为了节省时间，我没有使用最一般的公式进行拟合，我只是假设电容很小，最终拟合的结果还是十分精确。但是电容的存在对于相位差的影响便是决定性的：在下面的推导我们将看到，电容的存在使得式子~\ref{label}从一个简单的一次函数变为一个三次函数，因此在分析相位差与频率的关系时必须使用三次函数进行拟合。我们先来推导这个三次函数的拟合的理论表达式
+
+如果引入电感的复阻抗
+\beq
+Z_L = j\omega L
+\eeq
+，其中$j$是虚数单位。就可以避免如上繁杂的操作，直接使用复阻抗和通常电阻的串并联关系解决问题。电容的复阻抗为
+\beq
+Z_C = \frac{1}{j\omega L}
+\eeq
+一般的电路是由电阻和电感串联再和一定的电容并联而成的，因此总的复阻抗为
+\beq
+\frac{1}{Z} = \frac{1}{R+j\omega L} +  j\omega C
+\eeq
+解得
+\beq\label{resis}
+Z = \frac{R+j\omega L}{(1-\omega^2 LC)^2+\omega^2c^2R^2}e^{i(\theta_1 - \theta_2)}
+\eeq
+其中
+\bea
+\tan \theta_1 &=& \frac{\omega L}{R} = \frac{2\pi Lf}{R}\\
+\tan \theta_2 &=& \frac{\omega CR}{1-\omega^2LC} 
+\eea
+由三角函数公式
+\beq
+\tan\left(\theta_2-\theta_!\right) = \frac{\tan\theta_2 - \tan\theta_1}{1+\tan\theta_1\tan\theta_2}
+\eeq
+得到
+\beq
+\tan\Delta\theta = -\frac{L^2C}{R}\omega^3 - RC\omega + \frac{\omega L}{R}
+\eeq
+这就是我们在下面分析与讨论中需要验证和拟合的公式。对于自己绕的电感，我打算使用近似公式(当电容很小的时候)
+\beq
+Z \simeq \sqrt{R^2 + \omega^2 L^2}
+\eeq
+对于标称0.1$\Omega$的电阻，我便同时忽略电感和电容，而将电感和电容的效应展示在相位差\footnote{这里的相位差指的都是采样电阻测得的相位差与实际原件的相位差(这里的相位差是锁相放大器输出的，参考信号与输出信号之间的相位差)的差值}的拟合中。
+\subsubsection{测量标记为1$\Omega$的电阻阻抗随电压关系和相位角随着电压的关系}
+首先对于扫场获得的数据，对于同一个频率取平均值(这里取平均值的操作包括对电压和相位角)。由于采样间隔比较短，数据点比较多，我不打算在报告中展示出来，感兴趣的读者可以访问~\cite{github}获取数据。我们先分析电阻部分，在这里我忽略电感和电容(因为效应不明显，而且表达式稍微复杂),即我取复阻抗$Z_R = R$，由前面可知，对于电感和电容的效应将体现在相位差随频率的变化之中。所以我们直接对测得的电阻取平均值，有
+\beq
+ R = 1.00 \pm 0.01\mathrm{\Omega}
+ \eeq
+ 当然，上面的平均值和误差计算用到了大家都知道的公式
+ \bea
+ \langle R\rangle&=& \frac{\sum_{i=1}^N R_i}{N} \\
+ \sigma_R^2 &=& \frac{\sum_i (R_i - \langle R\rangle)^2}{N(N-1)}
+ \eea
+ 可见与标称值$0.01\mathrm{\Omega}$十分接近，相对误差为
+ \beq
+ \frac{\Delta R}{R} = 1\%
+ \eeq
+
+ 我们再来分析随着频率的增高，相位差随着频率的关系，经过前面的理论分析，近似认为一个电阻元件的电容为0，但是可能存在电感(这一测到的电感也有可能是接线等其他因素引起的)。我们应该用下面的函数来拟合
+ \beq
+ \tan\theta = \frac{\omega L}{R}
+ \eeq
+ 拟合结果如图~\ref{theta-freq-pure}所示
+ \cpicn{0.5}{theta-freq-pure}{对于电阻软件$\tan\theta$和频率的线性拟合}
+ 使用相关系数来表示拟合的好坏，本次拟合的相关系数为
+ \beq
+ R^2 = 0.99995
+ \eeq
+ 从图中看到一个数据点距离曲线较远，可能是粗大误差引起的。在实际拟合过程中，我们已经将这个点删除。拟合结果发现拟合系数为
+ \beq
+ \frac{2\pi L}{R} = (1.078\pm0.003)  \times 10^{-6} \mathrm{Hz^{-1}}
+ \eeq
+ 进而计算得到
+ \beq
+ \frac{L}{R} = \frac{1.078\times 10^{-6}}{2\pi}  \mathrm{Hz^{-1}} \simeq 0.17\times 10^{-6}  \mathrm{Hz^{-1}}
+ \eeq
+ 通过带入上面的电阻值，我们得到这个电阻的感抗
+ \beq
+ L \simeq 1.7 \times 10^{-7} \mathrm{H}
+ \eeq
+ 可见虽然很小，但是电阻中还是有电感成分存在。但是这个电感成分可能不全部来源于待测电阻元件，还有可能来源于接线和其他因素。从这个例子也可以看到利用锁相放大器测量微小阻抗的优越性，连$10^{-7}\mathrm{H}$的电感也可以测出来。
+ 
+ \subsubsection{自制电感的测量}
+ 首先先分析复阻抗的模长随着频率的变化，先忽略自制电感中的电容分量，使用公式
+ \beq
+ |Z| = \sqrt{R^2 + \omega^2 L^2}
+ \eeq
+ 拟合结果如图所示，得到的电阻值为
+ \cpicn{0.5}{freq-resis-inductance.jpg}{自制电感复阻抗模长随着频率的变化}
+ \beq
+ R =(0.70\pm 0.01)\mathrm{\Omega}
+ \eeq
+ 电感值为
+ \beq
+ L = (8.1\pm 0.5) \times 10^{-6}\mathrm{H}
+ \eeq
+
+ 现在我们来考虑相位差随着频率的变化，这里必须要考虑电容的贡献，因此使用公式
+ \beq
+\tan\Delta\theta =\pm\left( -\frac{L^2C}{R}\omega^3 - RC\omega + \frac{\omega L}{R}\right)
+\eeq
+前面的$\pm$与$\Delta \theta$的定义有关。拟合得到的结果如图~\ref{theta-freq-inductance.jpg}所示。
+\cpicn{0.5}{theta-freq-inductance.jpg}{对于自制电阻，相位差随着频率变化的拟合曲线}
+拟合的相关系数
+\beq
+R^2 = 0.99994
+\eeq
+多项式的系数
+\bea
+\frac{L^2C}{R} &=& (1.4\pm 8) \times 10^{-16} \mathrm{Hz^{-3}} \\
+\frac{L}{R} - RC &=& (1.15 \pm 0.08) \times 10^{-9} \mathrm{Hz^{-1}}
+\eea
+显然第一个式子误差较大，是不能使用的。结合上面的多项式系数和电压频率的拟合结果，我们提取出自制电感(阻)的纯电容为
+\beq
+C=\frac{L}{R^2} - 1.15\times 10^{-9} \mathrm{F}= 1.653\times 10^{-5} \mathrm{F} 
+\eeq
+至此，我们将自制电感元件的纯电感、纯电阻、纯电容全部提取了出来。
+
+
+\subsection{实验报告思考题}
+\subsubsection{实验三}
+1. 分析锁相放大器检测方波的多次谐波的原理。
+
+方波信号是由锁相放大器内部产生经过衰减的到的，所以锁相放大器检测多次谐波的原理与内部参考信号的原理相同，即参考信号来源于锁相放大器本身，通过傅里叶变换剔除掉噪声的频率。只不过现在的频率很多，而总的信号是不同信号的叠加。
+
+2. 分析噪声对锁相放大器多次谐波检测能力的影响;
+
+通过实验我们发现，加入噪声之后，对于偶次波的检测有所影响--测到的有效值会增大，但是相比于奇数次谐波信号，偶数次信号还是非常小，可以近似为0，说明即使加入了噪声，锁相放大器检测多次谐波的能力还是非常强，对于奇数次波信号，检测能力与不加入噪声时差不多。
+
+3. (选)通过傅里叶变换,给出方波的频域谱。
+
+设方波的峰峰值为$E$，角频率为$\omega$，假设方波的表达式为
+\beq
+f(t) = \left\{\begin{aligned}
+&\frac{E}{2},\, -T/2 < x< 0\\
+&-\frac{E}{2},\, 0<x<T/2
+  \end{aligned}
+  \right.
+\eeq
+其中周期$T$与角频率的关系为$T = 2\pi / \omega$。将其分解为频率为$\omega$整数倍正弦函数的叠加
+\beq
+f(t) = \sum_n c_n \sin(n\omega t )
+\eeq
+根据公式
+\beq
+\frac{2}{T} \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt = \delta_{mn}
+\eeq
+因此将方波的表达式两边同时乘$\sin(m\omega t)$并进行积分
+\beq
+\int_{-T/2}^{T/2} f(t) \sin(m\omega t) dt = \sum_n c_n \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt
+\eeq
+其中等式右边为
+\beq
+\sum_n c_n \int_{-T/2}^{T/2}  \sin(n\omega t ) \sin(m\omega t) dt =\frac{T}{2}\sum_n c_n \delta_{mn}
+\eeq
+故有
+\beq
+c_n = \frac{2}{T} \int_{-T/2}^{T/2} f(t) \sin(n\omega t) dt
+\eeq
+进行计算，得到系数
+\beq
+\begin{aligned}
+  c_n &=& \frac{2}{T}\int_0^{T/2} E \sin(n\omega t)dt \\
+  &=& \frac{2E}{\omega T} \frac{1}{n} \left[1-(-1)^n \right] \\
+\end{aligned}
+\eeq
+故
+\beq
+c_n = \left\{ \begin{aligned}
+  &\frac{2E}{\pi} \frac{1}{n},\, \mathrm{n\,is\, odd}\\
+    & 0,\, \mathrm{n\, is\, even}
+  \end{aligned}
+  \right.
+\eeq
+最终的展开表达式为  
+\beq
+f(t) = \sum_n f_n(t) = \frac{2E}{\pi}\left[ \sin(\omega t) + \frac{1}{3}\sin(3\omega t)+\cdots + \frac{1}{n}\sin(n\omega t)+\cdots\right]
+\eeq
+上式中任意一项均是一个完备的正弦波信号，根据该正弦波信号与方波的频率倍数关系
+不同，可称其为n次谐波：
+\beq
+f_n(t) = \frac{2E}{n\pi} \sin(n\omega t)
+\eeq
+\subsubsection{实验四}
+1. 分析引线对小阻抗精密测量的影响;
+
+计算电感和纯电阻并联产生的阻抗。假设检测到系统两端的电压为
+\beq
+U = U_0 e^{i\omega t}
+\eeq
+根据欧姆定律，在电阻两端
+\beq
+U_R = IR
+\eeq
+根据电感的定义，在电感两端
+\beq
+U_L=  L \frac{dI}{dt}
+\eeq
+根据基尔霍夫定律，得到一个一阶的微分方程
+\beq
+L\frac{dI}{dt}+RI = U_0 e^{i\omega t}
+\eeq
+作试探解$I = I_0 e^{i\omega t}$，带入上面的方程得到
+\beq
+I_0 = \frac{U_0}{R+i\omega L}
+\eeq
+故得到复阻抗
+\beq
+\tilde{Z} = R+i\omega L = \sqrt{R^2 + \omega^2L^2}e^{i\theta_0}
+\eeq
+其中
+\beq
+\tan\theta_0 = \frac{\omega L}{R}
+\eeq
+可见，如果引线存在电阻，那么首先他会对纯电阻项$\sqrt{R^2+\omega^2 L^2}$产生影响，另一方面，引线也存在电感(根据引线的弯曲程度有关)，那么引线还会对相位差的测量产生影响，但是由于实验中，每次都使用相同的引线，由于有纯电阻作为参考，所以引线对于相位差的这部分影响不会很大。
+
+2. 分析所测量相位(差)值的物理含义。
+
+计算电感和纯电阻并联产生的阻抗。假设检测到系统两端的电压为
+\beq
+U = U_0 e^{i\omega t}
+\eeq
+根据欧姆定律，在电阻两端
+\beq
+U_R = IR
+\eeq
+根据电感的定义，在电感两端
+\beq
+U_L=  L \frac{dI}{dt}
+\eeq
+根据基尔霍夫定律，得到一个一阶的微分方程
+\beq
+L\frac{dI}{dt}+RI = U_0 e^{i\omega t}
+\eeq
+作试探解$I = I_0 e^{i\omega t}$，带入上面的方程得到
+\beq
+I_0 = \frac{U_0}{R+i\omega L}
+\eeq
+故得到复阻抗
+\beq
+\tilde{Z} = R+i\omega L = \sqrt{R^2 + \omega^2L^2}e^{i\theta_0}
+\eeq
+其中
+\beq
+\tan\theta_0 = \frac{\omega L}{R}
+\eeq
+实验中测得的相位差是参考信号与输出信号的相位差，如果参考信号相同，那么如果有一个标准的纯电阻(相位差为0)，则可以用元件测得的相位差和标准纯电阻的相位差相减，近似地得到由于电感引起的滞后的相位差。对于更加复杂的情况(例如引入电容)的推导，参见分析与讨论实验四的第一节。总之，这里的相位差指的是电压与电流之间的相位差，是由于元件的电感或者电容引起的。
+\bibliographystyle{siam}
+\bibliography{cites}
+\end{document}

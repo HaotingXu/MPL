@@ -1,0 +1,26 @@
+\contentsline {section}{\numberline {1}实验原理与方案}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}实验目的}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}仪器用具}{5}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}实验安全注意事项}{5}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}实验原理}{5}{subsection.1.4}
+\contentsline {subsubsection}{\numberline {1.4.1}实验三--微弱信号多谐波测量实验}{5}{subsubsection.1.4.1}
+\contentsline {subsubsection}{\numberline {1.4.2}微小阻抗测量实验}{7}{subsubsection.1.4.2}
+\contentsline {subsubsection}{\numberline {1.4.3}应用锁相放大器的四引线法测量小阻抗}{8}{subsubsection.1.4.3}
+\contentsline {subsection}{\numberline {1.5}实验前思考题}{9}{subsection.1.5}
+\contentsline {subsubsection}{\numberline {1.5.1}实验三}{9}{subsubsection.1.5.1}
+\contentsline {subsubsection}{\numberline {1.5.2}实验四}{11}{subsubsection.1.5.2}
+\contentsline {section}{\numberline {2}实验步骤与记录}{13}{section.2}
+\contentsline {subsection}{\numberline {2.1}实验三--微弱信号多谐波测量实验}{13}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}实验四--微小阻抗测量实验}{15}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}实验中遇到的问题记录}{18}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}实验原始记录}{18}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}教师签名}{21}{subsection.2.5}
+\contentsline {section}{\numberline {3}分析与讨论}{22}{section.3}
+\contentsline {subsection}{\numberline {3.1}实验三--微弱信号多谐波测量实验}{22}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}实验四--微小阻抗测量实验}{25}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}理论分析}{25}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}测量标记为1$\Omega $的电阻阻抗随电压关系和相位角随着电压的关系}{27}{subsubsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.3}自制电感的测量}{29}{subsubsection.3.2.3}
+\contentsline {subsection}{\numberline {3.3}实验报告思考题}{31}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}实验三}{31}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}实验四}{32}{subsubsection.3.3.2}

@@ -1,0 +1,31 @@
+import numpy as np
+from matplotlib import pyplot as plt
+from scipy.stats import t
+
+
+
+
+fig = plt.gca()
+plt.errorbar(1, X_mean, yerr=X_std, fmt='-o')
+plt.errorbar(2, X_mean, yerr=X_se, fmt='-o')
+plt.errorbar(3, X_mean, yerr=conf_interval, fmt='-o')
+
+plt.xlim([0,4])
+plt.ylim(X_mean-conf_interval-2, X_mean+conf_interval+2)
+
+# axis formatting
+fig.axes.get_xaxis().set_visible(False)
+fig.spines["top"].set_visible(False)
+fig.spines["right"].set_visible(False)
+plt.tick_params(axis="both", which="both", bottom="off", top="off",
+                labelbottom="on", left="on", right="off", labelleft="on")
+
+plt.legend(['Standard Deviation', 'Standard Error', 'Confidence Interval'],
+           loc='upper left',
+           numpoints=1,
+           fancybox=True)
+
+plt.ylabel('random variable')
+plt.title('15 random values in the range 5-15')
+
+plt.show()
