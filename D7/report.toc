@@ -1,0 +1,12 @@
+\contentsline {section}{\numberline {1}实验原理与方案}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}实验目的}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}仪器用具}{4}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}实验安全注意事项}{4}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}实验原理}{4}{subsection.1.4}
+\contentsline {subsubsection}{\numberline {1.4.1}$\gamma $射线与物质的相互作用}{5}{subsubsection.1.4.1}
+\contentsline {subsection}{\numberline {1.5}实验前思考题}{12}{subsection.1.5}
+\contentsline {section}{\numberline {2}实验步骤与记录}{18}{section.2}
+\contentsline {subsection}{\numberline {2.1}实验中遇到的问题记录}{18}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}实验原始记录与教师签名}{18}{subsection.2.2}
+\contentsline {section}{\numberline {3}分析与讨论}{19}{section.3}
+\contentsline {subsection}{\numberline {3.1}实验后思考题}{19}{subsection.3.1}
