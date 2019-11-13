@@ -5,8 +5,10 @@
 \contentsline {subsection}{\numberline {1.4}实验原理}{4}{subsection.1.4}
 \contentsline {subsubsection}{\numberline {1.4.1}$\gamma $射线与物质的相互作用}{5}{subsubsection.1.4.1}
 \contentsline {subsection}{\numberline {1.5}实验前思考题}{12}{subsection.1.5}
-\contentsline {section}{\numberline {2}实验步骤与记录}{18}{section.2}
-\contentsline {subsection}{\numberline {2.1}实验中遇到的问题记录}{18}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}实验原始记录与教师签名}{18}{subsection.2.2}
-\contentsline {section}{\numberline {3}分析与讨论}{19}{section.3}
-\contentsline {subsection}{\numberline {3.1}实验后思考题}{19}{subsection.3.1}
+\contentsline {section}{\numberline {2}实验步骤与记录}{19}{section.2}
+\contentsline {subsection}{\numberline {2.1}实验中遇到的问题记录}{19}{subsection.2.1}
+\contentsline {section}{\numberline {3}分析与讨论}{20}{section.3}
+\contentsline {subsection}{\numberline {3.1}谱仪能量刻度的标定}{20}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}谱仪能量分辨率}{23}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}$\alpha $粒子测量的实验}{23}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}实验后思考题}{23}{subsection.3.4}
